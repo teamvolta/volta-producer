@@ -1,0 +1,22 @@
+{
+  "name": "volta-producer",
+  "version": "1.0.0",
+  "description": "Producer node for Volta smart grid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/teamvolta/volta-producer.git"
+  },
+  "author": "John, Anastasia, Michael & Nikhil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teamvolta/volta-producer/issues"
+  },
+  "homepage": "https://github.com/teamvolta/volta-producer",
+  "dependencies": {
+    "socket.io-client": "^1.2.1"
+  }
+}
