@@ -5,6 +5,10 @@ var jshint = require('gulp-jshint');
 
 gulp.task('default', function() {
   // default task will be added here
+  gulp.src('./*.js')
+  .pipe(jshint('.jshintrc'))
+  .pipe(jshint.reporter('jshint-stylish'));
+  
   gulp.src('./package.json') //gulp.src fetches the file and passes it on as an argument
   .pipe(install());
 });
