@@ -8,17 +8,15 @@ socket.on('connect', function(){
   // This is called with no event, also, currently using socket.id for id anyways
   // socket.emit({id: config.productionId});
   // Report supply in intervals
-  setInterval(function(){
-    var supply = simulation.getSupply();
-    // User socketId for now
-    supply.producerId = socket.io.engine.id;
-    socket.emit('reportSupply', supply);
-  }, 500)
 });
 
 //receives request from system admin for supply capacity(mwh) and price($/mwh) for bidding
 socket.on('requestSupply', function(){
-  socket.emit('reportSupply', simulation.getSupply());
+  console.log('requestSupply')
+  var supply = simulation.getSupply();
+  // User socketId for now
+  supply.producerId = socket.io.engine.id;
+  socket.emit('reportSupply', supply);
 });
 
 //receives request from system admin to set capacity based on market-clearing price
