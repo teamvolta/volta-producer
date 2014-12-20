@@ -12,3 +12,8 @@ socket.on('connect', function(){
 socket.on('requestSupply', function(){
   socket.emit('reportSupply', simulation.getSupply());
 });
+
+//receives request from system admin to set capacity based on market-clearing price
+socket.on('setCapacity', function(data){
+  socket.emit('reportCapacity', simulation.setCapacity(data));
+});
