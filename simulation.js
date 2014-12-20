@@ -1,4 +1,4 @@
-var config = require('./config')[development];
+var config = require('./config')['development'];
 
 var getSupply = function(){
   var supplyPrice = {
@@ -6,13 +6,13 @@ var getSupply = function(){
     pricePerMWH: config.pricePerMWH,
     minCapacity: config.minCapacity,
     maxCapacity: config.maxCapacity
-  }
+  };
   return supplyPrice;
 };
 
 var setCapacity = function(data){
   var cap = {
-    current: config.currentOutput;
+    current: config.currentOutput
   };
 
   var capRequired = data.capacity;
@@ -27,4 +27,4 @@ var setCapacity = function(data){
     cap.current = capRequired - config.minCapacity;
   }
   return cap;
-}
+};
