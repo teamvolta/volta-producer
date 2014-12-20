@@ -4,7 +4,7 @@ var install = require('gulp-install');
 var jshint = require('gulp-jshint');
 
 gulp.task('default', function() {
-  gulp.start('style', 'install');  // default task can be added here
+  gulp.start('install', 'style');  // default task can be added here
 });
 
 
