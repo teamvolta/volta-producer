@@ -2,7 +2,6 @@ var config = require('./config')['development'];
 
 var getSupply = function(){
   var supplyPrice = {
-    productionId: config.productionId,
     pricePerMWH: config.pricePerMWH,
     minCapacity: config.minCapacity,
     maxCapacity: config.maxCapacity
@@ -28,3 +27,6 @@ var setCapacity = function(data){
   }
   return cap;
 };
+
+exports.getSupply = getSupply;
+exports.setCapacity = setCapacity;
