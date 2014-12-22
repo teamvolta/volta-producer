@@ -1,8 +1,9 @@
 var Producer = function(config){
-  this.pricePerMWH: config.pricePerMWH,
-  this.minCapacity: config.minCapacity,
-  this.maxCapacity: config.maxCapacity,
-  this.currCapacity: config.currCapacity
+  this.pricePerMWH = config.pricePerMWH,
+  this.minCapacity = config.minCapacity,
+  this.maxCapacity = config.maxCapacity,
+  this.currCapacity = config.currCapacity
+  reporter.register('production', function(){return this}.bind(this))
 };
 
 Producer.prototype.getSupply = function(){
@@ -15,7 +16,7 @@ Producer.prototype.getSupply = function(){
 
 Producer.prototype.setCapacity = function(data){
   var cap = {
-    current: this.currCapacity;
+    current: this.currCapacity
   };
 
   var capRequired = data.capacity;

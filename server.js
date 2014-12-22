@@ -1,6 +1,26 @@
 var config = require('./config')[process.argv[2]];
+var reporter = new (require('./adminReporter'))();
+global.reporter = reporter;
 var producer = new (require('./simulation'))(config);
 var socket = require('socket.io-client')(config.systemIp);
+var express = require('express');
+var app = express();
+// Setup reporter
+// Setup middleware
+app.use(express.static(__dirname + '/public'));
+var server = require('http').Server(app);
+// Setup server.
+server.listen(config.port);
+
+// Serve admin
+app.get('/admin', function(req, res){
+  res.sendFile(__dirname + '/public/admin.html')
+});
+
+// Serve stats
+app.get('/api/stats', function(req, res){
+  res.json(reporter.update())
+});
 
 //signal when connection is established
 socket.on('connect', function(){
