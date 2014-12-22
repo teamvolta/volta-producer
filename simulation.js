@@ -1,32 +1,35 @@
-var config = require('./config')['development'];
-
-var getSupply = function(){
-  var supplyPrice = {
-    pricePerMWH: config.pricePerMWH,
-    minCapacity: config.minCapacity,
-    maxCapacity: config.maxCapacity
-  };
-  return supplyPrice;
+var Producer = function(config){
+  this.pricePerMWH: config.pricePerMWH,
+  this.minCapacity: config.minCapacity,
+  this.maxCapacity: config.maxCapacity,
+  this.currCapacity: config.currCapacity
 };
 
-var setCapacity = function(data){
+Producer.prototype.getSupply = function(){
+  return {
+    pricePerMWH: this.pricePerMWH,
+    minCapacity: this.minCapacity,
+    maxCapacity: this.maxCapacity
+  };
+};
+
+Producer.prototype.setCapacity = function(data){
   var cap = {
-    current: config.currentOutput
+    current: this.currCapacity;
   };
 
   var capRequired = data.capacity;
 
-  if (capRequired > config.maxCapacity){
-    cap.current = config.maxCapacity;
+  if (capRequired > this.maxCapacity){
+    cap.current = this.maxCapacity;
   }
-  if (capRequired < config.minCapacity){
-    cap.current = config.minCapacity;
+  if (capRequired < this.minCapacity){
+    cap.current = this.minCapacity;
   }
-  if (capRequired > config.minCapacity && capRequired < config.maxCapacity){
-    cap.current = capRequired - config.minCapacity;
+  if (capRequired > this.minCapacity && capRequired < this.maxCapacity){
+    cap.current = capRequired - this.minCapacity;
   }
   return cap;
 };
 
-exports.getSupply = getSupply;
-exports.setCapacity = setCapacity;
+module.exports = Producer;
