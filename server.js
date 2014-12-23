@@ -1,4 +1,6 @@
-var config = require('./config')[process.argv[2]];
+process.env.node_env = process.env.node_env || "development";
+
+var config = require('./config')[process.env.node_env];
 var reporter = new (require('./adminReporter'))();
 global.reporter = reporter;
 var producer = new (require('./simulation'))(config);
