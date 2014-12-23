@@ -3,9 +3,7 @@ var mocha = require('gulp-mocha');
 var install = require('gulp-install');
 var jshint = require('gulp-jshint');
 
-gulp.task('default', function() {
-  gulp.start('install', 'style');  // default task can be added here
-});
+gulp.task('default', ['mochaTest']);
 
 
 gulp.task('install', function() {
@@ -13,7 +11,7 @@ gulp.task('install', function() {
   .pipe(install());
 })
 
-gulp.task('test', function() {  //I am still not sure what it actually does
+gulp.task('mochaTest', function() {  //I am still not sure what it actually does
 	                            // passing shared module in all tests (according to docs)
   return gulp.src('test/test.js', {read: false})   
          .pipe(mocha({reporter: 'spec'}));  //reporter spec is just the nested structure of Mocha output
