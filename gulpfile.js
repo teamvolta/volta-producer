@@ -12,6 +12,10 @@ gulp.task('install', function() {
   .pipe(install());
 })
 
+//////////////
+//Helper tasks
+//////////////
+
 gulp.task('mochaTest', function() {  //I am still not sure what it actually does
 	                            // passing shared module in all tests (according to docs)
   return gulp.src('test/test.js', {read: false})   
@@ -36,6 +40,12 @@ gulp.task('style', function() {
   .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('deploy', function () {
-  
+gulp.task('upload', function () { 
+  run('git push azure').exec(); //this runs the deployment command
 });
+
+/////////////
+//Main tasks
+/////////////
+
+gulp.task('test', ['mochaTest', 'style', 'testCoverage']);
