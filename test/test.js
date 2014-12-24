@@ -8,10 +8,10 @@ describe("test for tests", function(){ //mock test, to test gulp and deployment
     expect(a).to.equal(2);
   });
 
-  it("failing tests should stop deployment", function(){  //uncomment if you want to check whether a failing test prevents deployment
+  /*it("failing tests should stop deployment", function(){  //uncomment if you want to check whether a failing test prevents deployment
     var a = 2;
     console.log("testing");  
     expect(a).to.equal(3);
-  });
+  });*/
 
 });
