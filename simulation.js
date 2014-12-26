@@ -33,4 +33,8 @@ Producer.prototype.setCapacity = function(data){
   return cap;
 };
 
+bidTime = data.blockStart;
+var bidHours = Date(bidtime).slice(16,18);
+
+
 module.exports = Producer;

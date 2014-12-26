@@ -5,7 +5,7 @@ exports.development = {
   pricePerMWH: 9001,
   minCapacity: 0,
   maxCapacity: 100,
-  currentOutput: 100
+  currCapacity: 100
 };
 
 exports.production = {

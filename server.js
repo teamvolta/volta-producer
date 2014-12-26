@@ -42,6 +42,11 @@ socket.on('requestSupply', function(){
 });
 
 //receives request from system admin to set capacity based on market-clearing price
+// Receive time-slot and duration from system operator
+// {
+//   timeslot: UTC ms,
+//   duration: ms
+// }
 socket.on('changeProduction', function(data){
   producer.setCapacity(data)
   // Not needed right now
