@@ -3,6 +3,7 @@ var mocha = require('gulp-mocha');
 var istanbul = require('gulp-istanbul');
 var install = require('gulp-install');
 var jshint = require('gulp-jshint');
+var run = require('gulp-run');
 
 gulp.task('default', ['mochaTest', 'style']);
 
@@ -10,7 +11,7 @@ gulp.task('default', ['mochaTest', 'style']);
 gulp.task('install', function() {
    gulp.src('./package.json') //gulp.src fetches the file and passes it on as an argument
   .pipe(install());
-})
+});
 
 //////////////
 //Helper tasks
@@ -24,7 +25,9 @@ gulp.task('mochaTest', function() {  //I am still not sure what it actually does
 
 gulp.task('testCoverage', function (cb) {
   gulp.src(['./*.js'])
-    .pipe(istanbul({includeUntested: true})) // Covering files; includeUntested is needed to include all files, and not only 'required' ones
+    //Covering files; includeUntested is needed to include all files
+    //and not only 'required' ones 
+    .pipe(istanbul({includeUntested: true})) 
     .pipe(istanbul.hookRequire()) // Force `require` to return covered files
     .on('finish', function () {
       gulp.src(['test/test.js'])
