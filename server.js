@@ -1,6 +1,6 @@
-process.env.node_env = process.env.node_env || "development";
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var config = require('./config')[process.env.node_env];
+var config = require('./config')[process.env.NODE_ENV];
 var reporter = new (require('./adminReporter'))();
 global.reporter = reporter;
 var producer = new (require('./simulation'))(config);
@@ -16,16 +16,16 @@ server.listen(config.port);
 
 // Serve admin
 app.get('/admin', function(req, res){
-  res.sendFile(__dirname + '/public/admin.html')
+  res.sendFile(__dirname + '/public/admin.html');
 });
 
 // Serve stats
 app.get('/api/stats', function(req, res){
-  res.json(reporter.update())
+  res.json(reporter.update());
 });
 
-console.log("Running the server file again");
-console.log("node_env", process.env.node_env); //to check whether it's been set to production when deployed
+console.log('Running the server file again');
+console.log('NODE_ENV', process.env.NODE_ENV); //to check whether it's been set to production when deployed
 
 //signal when connection is established
 socket.on('connect', function(){
@@ -34,7 +34,7 @@ socket.on('connect', function(){
 
 //receives request from system admin for supply capacity(mwh) and price($/mwh) for bidding
 socket.on('requestSupply', function(){
-  console.log('requestSupply')
+  console.log('requestSupply');
   var supply = producer.getSupply();
   // User socketId for now
   supply.producerId = socket.io.engine.id;
@@ -48,7 +48,7 @@ socket.on('requestSupply', function(){
 //   duration: ms
 // }
 socket.on('changeProduction', function(data){
-  producer.setCapacity(data)
+  producer.setCapacity(data);
   // Not needed right now
   // socket.emit('reportCapacity', producer.setCapacity(data));
 });
