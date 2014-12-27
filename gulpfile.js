@@ -4,7 +4,7 @@ var istanbul = require('gulp-istanbul');
 var install = require('gulp-install');
 var jshint = require('gulp-jshint');
 
-gulp.task('default', ['mochaTest']);
+gulp.task('default', ['mochaTest', 'style']);
 
 
 gulp.task('install', function() {
