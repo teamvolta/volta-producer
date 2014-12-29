@@ -8,7 +8,7 @@ adminReporter.prototype.register = function(key, watcher) {
   if(!this.dataStore[key]){
     this.dataStore[key] = {data:{}};
     this.dataExport.push(this.dataStore[key].data);
-  };
+  }
   this.dataStore[key].watcher = watcher;
   this.dataStore[key].data.name = key;
   this.dataStore[key].data.value = watcher();
@@ -16,11 +16,11 @@ adminReporter.prototype.register = function(key, watcher) {
 
 // Updates all values and returns array of updated key value pairs.
 adminReporter.prototype.update = function() {
-  for(key in this.dataStore){
+  for(var key in this.dataStore){
     if(this.dataStore.hasOwnProperty(key)){
       this.dataStore[key].data.value = this.dataStore[key].watcher();
     }
-  };
+  }
   return this.dataExport;
 };
 
