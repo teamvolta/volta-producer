@@ -1,0 +1,3 @@
+general:
+  artifacts:
+    - "coverage/lcov-report" # relative to the build directory
