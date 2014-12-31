@@ -7,6 +7,7 @@ var producer = new (require('./simulation'))(config);
 var socket = require('socket.io-client')(config.systemIp);
 var express = require('express');
 var app = express();
+var cors = require('cors');
 var mongoose = require('mongoose');
 var helpers = require('./db/dbHelpers.js');
 // Setup reporter
@@ -18,6 +19,8 @@ server.listen(config.port);
 
 mongoose.connect('mongodb://localhost/producerdb'); // connect to mongo database named producerdb
 //should change the url
+
+app.use(cors());
 
 //Fake data to test the db;
 var timeblockRequest = {
