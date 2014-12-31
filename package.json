@@ -19,7 +19,13 @@
   "dependencies": {
     "express": "^4.10.6",
     "socket.io": "^1.2.1",
-    "socket.io-client": "^1.2.1"
+    "socket.io-client": "^1.2.1",
+    "mongodb": "^1.4.22",
+    "mongoose": "^3.8.12",
+    "body-parser": "^1.4.3",
+    "morgan": "^1.1.1",
+    "q": "^1.0.1",
+    "request": "^2.36.0"
   },
   "devDependencies": {
     "chai": "^1.10.0",
