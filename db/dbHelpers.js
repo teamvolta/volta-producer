@@ -4,13 +4,23 @@ var Q = require('q');
 module.exports = {
   addData: function (timeblockRequest) {
     var createRecord = Q.nbind(Production.create, Production);
+    var findRecord = Q.nbind(Production.findOne, Production);
     var newRecord = {
             timeblock: timeblockRequest.timeblock,
             duration: timeblockRequest.duration,
             capacity: timeblockRequest.capacity,
             cost: timeblockRequest.cost
           };
-    return createRecord(newRecord);
+    findRecord({timeblock: timeblockRequest.timeblock})
+      .then(function (match) {
+        if (match) {
+          console.log("found", match);
+          return;
+        } else {
+          console.log("not found");
+          return createRecord(newRecord);
+        }
+      }) 
   },
 
   updateData: function (timeblockRequest) {
@@ -36,12 +46,12 @@ module.exports = {
       });
   },
 
-  getData: function (timeblockRequest) {
+  getData: function (timeblockRequest, res) {
     var findRecord = Q.nbind(Production.findOne, Production);
     findRecord({timeblock: timeblockRequest.timeblock})
       .then(function (record) {
         if (record) {
-          return record;
+          res.json(record);
         } else {
           console.log('Timeblock not added yet');
         }

@@ -8,7 +8,7 @@ var socket = require('socket.io-client')(config.systemIp);
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-var helpers = require('./dbHelpers.js');
+var helpers = require('./db/dbHelpers.js');
 // Setup reporter
 // Setup middleware
 app.use(express.static(__dirname + '/public'));
@@ -54,7 +54,8 @@ app.get('/api/dashboard', function (req, res){
     timeblock: 1420046277204
 //    timeblock: req.body.timeblock;
   }
-  res.json(helpers.getData(timeblockRequest));
+  console.log("get request received");
+  helpers.getData(timeblockRequest, res);
 });
 
 console.log('Running the server file again');
