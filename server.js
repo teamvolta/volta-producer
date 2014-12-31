@@ -7,12 +7,16 @@ var producer = new (require('./simulation'))(config);
 var socket = require('socket.io-client')(config.systemIp);
 var express = require('express');
 var app = express();
+var mongoose = require('mongoose'); 
 // Setup reporter
 // Setup middleware
 app.use(express.static(__dirname + '/public'));
 var server = require('http').Server(app);
 // Setup server.
 server.listen(config.port);
+
+mongoose.connect('mongodb://localhost/producerdb'); // connect to mongo database named producerdb
+//should change the url
 
 // Serve admin
 app.get('/admin', function(req, res){
