@@ -521,16 +521,9 @@
   <!-- <script src="socketClient.js"></script> -->
   <script src="../node_modules/socket.io-client/socket.io.js"></script>
   <script>
-  var socket = io('http://localhost:8010/subscriptions');
-  var queue = [];
-  socket.on('transaction', function (data) {
-    console.log(data);    
-    queue.push(data);
-    if (queue.length >10) {
-      queue.shift();
-    }
-    $('body').chartProduction(queue);
-  });
+  
+    $('body').chartProduction();
+  
   </script>
 </body>
 </html>

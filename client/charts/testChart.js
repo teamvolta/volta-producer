@@ -1,18 +1,36 @@
 
 
-$.fn.chartProduction = function (queue) {
-    var axis1 = _.pluck(queue, "blockStart");
-    var axis2 = _.pluck(queue, "capacity");
-    var axis3 = _.pluck(queue, "energy"); 
+$.fn.chartProduction = function () {
+    
     $('#production').highcharts({
         chart: {
             type: 'column',
+            events: {
+                load: function() {
+                    var timeblock = this.xAxis[0].categories;
+                    var capacity = this.series[0];
+                    var production = this.series[1];
+                    var self = this;
+
+                    var socket = io('http://localhost:8010/subscriptions');
+  
+                    socket.on('transaction', function (data) {
+                        // when a sample arrives we plot it
+                        console.log("data", data);
+                        capacity.addPoint(data.capacity, false, true);
+                        production.addPoint(data.energy, false, true);
+                        timeblock.push(data.blockStart);
+                        //timeblock.shift();
+                        self.redraw();
+                    });
+                }
+              }  
         },
         title: {
             text: 'Capacity and Production, MW'
         },
         xAxis: {
-            categories: axis1
+            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
         yAxis: {
             title: {
@@ -33,10 +51,10 @@ $.fn.chartProduction = function (queue) {
         },
         series: [{
             name: 'Spare capacity',
-            data: axis2
+            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
         }, {
             name: 'Production',
-            data: axis3
+            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
         }]
     });
 }
