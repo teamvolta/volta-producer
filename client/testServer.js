@@ -17,12 +17,12 @@ setInterval(function() {
   data = {
 	price: 100*Math.random(), 
 	producerId: "rand", 
-	energy: 200*Math.random(),
+	capacity: 200*Math.random(),
 	blockStart: 10*Math.random(),
 	blockDuration: 2,
 	transactionId: "random"
  };
- data.capacity = data.price*Math.random();
+ data.energy = data.capacity*Math.random();
 }, 3000);
 
 
