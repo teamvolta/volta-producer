@@ -65,7 +65,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="container"></div>
+                            <div id="production"></div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -485,6 +485,7 @@
     </div>
     <!-- /#wrapper -->
 
+    <script src="./bower_components/underscore/underscore-min.js"></script>
     <!-- jQuery -->
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -514,8 +515,22 @@
         <p> {{ data }} </p>
     </div>
 
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="records.js"></script> 
+  <!--<script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script> -->
+  <!--<script src="records.js"></script>-->
+  <!-- <script src="socketClient.js"></script> -->
+  <script src="../node_modules/socket.io-client/socket.io.js"></script>
+  <script>
+  var socket = io('http://localhost:8010/subscriptions');
+  var queue = [];
+  socket.on('transaction', function (data) {
+    console.log(data);    
+    queue.push(data);
+    if (queue.length >10) {
+      queue.shift();
+    }
+    $('body').chartProduction(queue);
+  });
+  </script>
 </body>
 </html>

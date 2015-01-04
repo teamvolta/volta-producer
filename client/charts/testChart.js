@@ -1,25 +1,42 @@
-$(function () { 
-    $('#container').highcharts({
+
+
+$.fn.chartProduction = function (queue) {
+    var axis1 = _.pluck(queue, "blockStart");
+    var axis2 = _.pluck(queue, "capacity");
+    var axis3 = _.pluck(queue, "energy"); 
+    $('#production').highcharts({
         chart: {
-            type: 'bar'
+            type: 'column',
         },
         title: {
-            text: 'Fruit Consumption'
+            text: 'Capacity and Production, MW'
         },
         xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
+            categories: axis1
         },
         yAxis: {
             title: {
-                text: 'Fruit eaten'
+                text: 'MW'
+            }
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black'
+                    }
+                }
             }
         },
         series: [{
-            name: 'Jane',
-            data: [1, 0, 4]
+            name: 'Spare capacity',
+            data: axis2
         }, {
-            name: 'John',
-            data: [5, 7, 3]
+            name: 'Production',
+            data: axis3
         }]
     });
-});
+}
