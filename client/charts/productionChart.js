@@ -1,7 +1,8 @@
 
 
+
 $.fn.chartProduction = function () {
-    
+
     $('#production').highcharts({
         chart: {
             type: 'column',
@@ -15,12 +16,10 @@ $.fn.chartProduction = function () {
                     var socket = io('http://localhost:8010/subscriptions');
   
                     socket.on('transaction', function (data) {
-                        // when a sample arrives we plot it
                         console.log("data", data);
                         capacity.addPoint(data.capacity, false, true);
                         production.addPoint(data.energy, false, true);
                         timeblock.push(data.blockStart);
-                        //timeblock.shift();
                         self.redraw();
                     });
                 }
@@ -30,12 +29,21 @@ $.fn.chartProduction = function () {
             text: 'Capacity and Production, MW'
         },
         xAxis: {
-            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            type: 'datetime',
+            labels: {
+              format: '{value:%l-%M-%S-%P}',
+              rotation: 90,
+              align: 'left'
+            }
         },
         yAxis: {
             title: {
                 text: 'MW'
             }
+        },
+        tooltip: {
+          pointFormat: "{point.y:,.0f}"
         },
         plotOptions: {
             column: {
@@ -51,10 +59,16 @@ $.fn.chartProduction = function () {
         },
         series: [{
             name: 'Spare capacity',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            dataLabels: {
+              format: '{point.y:,.0f}',
+            }
         }, {
             name: 'Production',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            dataLabels: {
+              format: '{point.y:,.0f}',
+            }
         }]
     });
 }

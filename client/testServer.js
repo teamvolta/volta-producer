@@ -18,7 +18,7 @@ setInterval(function() {
 	price: 100*Math.random(), 
 	producerId: "rand", 
 	capacity: 200*Math.random(),
-	blockStart: 10*Math.random(),
+	blockStart: Math.floor(10000000*Math.random()),
 	blockDuration: 2,
 	transactionId: "random"
  };
