@@ -1,7 +1,7 @@
 
 
 
-$.fn.chartPrice = function (socket) {
+$.fn.chartPrice = function (scope) {
     $('#price').highcharts({
         chart: {
             type: 'spline',
@@ -14,8 +14,8 @@ $.fn.chartPrice = function (socket) {
 
                     
   
-                    socket.on('transaction', function (data) {
-                        console.log("data", data);
+                    scope.$on('newInfo', function (event, dataFromSocket) {
+                        var data = dataFromSocket[dataFromSocket.length-1];
                         price.addPoint(data.price, false, true);
                         costs.addPoint(data.costs, false, true);
                         timeblock.push(data.blockStart);
@@ -28,7 +28,7 @@ $.fn.chartPrice = function (socket) {
             text: ''
         },
         xAxis: {
-            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            categories: _.pluck(scope.dataFromSocket, "blockStart"),
             type: 'datetime',
             labels: {
               format: '{value:%l-%M-%S-%P}',
@@ -59,14 +59,14 @@ $.fn.chartPrice = function (socket) {
         },
         series: [{
             name: 'Price',
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            data: _.pluck(scope.dataFromSocket, "price"),
             dataLabels: {
               format: '{point.y:,.0f}',
             },
             color: '#007f00'
         },  {
             name: 'Costs per MWH',
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            data: _.pluck(scope.dataFromSocket, "costs"),
             dataLabels: {
               format: '{point.y:,.0f}',
             },

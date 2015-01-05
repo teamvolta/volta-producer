@@ -7,7 +7,7 @@ angular.module('producerFrontEnd.services', [])
   for (var i = 0; i<targetLength; i++) {
   	dataFromSocket.push({price: 0,
 	                     capacity: 0,
-	                     blockStart: 0,
+	                     blockStart: i+1,
                          energy: 0,
                          costs: 0})
   };
