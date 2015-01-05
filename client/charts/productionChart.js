@@ -59,13 +59,13 @@ $.fn.chartProduction = function (socket) {
         },
         series: [{
             name: 'Spare capacity',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
             }
         }, {
             name: 'Production',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
             }

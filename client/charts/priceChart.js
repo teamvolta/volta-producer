@@ -2,9 +2,6 @@
 
 
 $.fn.chartPrice = function (socket) {
-  console.log("chart");
-  var y = $('#price').text()
-  console.log("y", y);
     $('#price').highcharts({
         chart: {
             type: 'spline',
@@ -62,13 +59,13 @@ $.fn.chartPrice = function (socket) {
         },
         series: [{
             name: 'Price',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
             }
         },  {
             name: 'Costs per MWH',
-            data: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
             }
