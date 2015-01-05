@@ -1,8 +1,12 @@
 angular.module('producerFrontEnd.dashboard', [])
 
 .controller('DashboardController', function ($scope, getSocket) {
-  angular.extend($scope, getSocket);
-  $('body').chartProduction($scope.socket);
-  $('body').chartPrice($scope.socket);
-  $('body').chartProfit($scope.socket);
+   angular.extend($scope, getSocket);
+   
+  $scope.$on('newInfo', function (event, dataFromSocket) {
+      $scope.dataFromSocket = dataFromSocket;
+    });
+  $('body').chartProduction($scope);
+  $('body').chartPrice($scope);
+  $('body').chartProfit($scope);
 });

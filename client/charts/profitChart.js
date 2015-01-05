@@ -1,7 +1,23 @@
 
 
 
-$.fn.chartProfit = function (socket) {
+$.fn.chartProfit = function (scope) {
+
+    var calculateInitialCosts = function (costsPerUnitArray, productionArray) {
+      var result=[];
+      for (var i = 0; i<costsPerUnitArray.length; i++) {
+        result[i] = costsPerUnitArray[i] * productionArray[i];
+      }
+      return result;
+    }
+    
+    var calculateInitialProfit = function (pricePerUnitArray, costsPerUnitArray, productionArray) {
+      var result=[];
+      for (var i = 0; i<pricePerUnitArray.length; i++) {
+        result[i] = (pricePerUnitArray[i] - costsPerUnitArray[i]) * productionArray[i];
+      }
+      return result;
+    }
 
     $('#profit').highcharts({
         chart: {
@@ -12,11 +28,10 @@ $.fn.chartProfit = function (socket) {
                     var costs = this.series[0];
                     var profit = this.series[1];
                     var self = this;
-
                     
   
-                    socket.on('transaction', function (data) {
-                        console.log("data", data);
+                    scope.$on('newInfo', function (event, dataFromSocket) {
+                        var data = dataFromSocket[dataFromSocket.length-1];
                         costs.addPoint(data.costs * data.energy, false, true);
                         profit.addPoint((data.price-data.costs)*data.energy, false, true);
                         timeblock.push(data.blockStart);
@@ -29,7 +44,7 @@ $.fn.chartProfit = function (socket) {
             text: ''
         },
         xAxis: {
-            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            categories: _.pluck(scope.dataFromSocket, "blockStart"),
             type: 'datetime',
             labels: {
               format: '{value:%l-%M-%S-%P}',
@@ -59,14 +74,14 @@ $.fn.chartProfit = function (socket) {
         },
         series: [{
             name: 'Costs',
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            data: calculateInitialCosts(_.pluck(scope.dataFromSocket, "costs"), _.pluck(scope.dataFromSocket, "energy")),
             dataLabels: {
               format: '{point.y:,.0f}',
             },
             color: '#ff7256'
         }, {
             name: 'Profit',
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            data: calculateInitialProfit(_.pluck(scope.dataFromSocket, "price"), _.pluck(scope.dataFromSocket, "costs"), _.pluck(scope.dataFromSocket, "energy")),
             dataLabels: {
               format: '{point.y:,.0f}',
             },
