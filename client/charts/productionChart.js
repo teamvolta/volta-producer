@@ -29,12 +29,21 @@ $.fn.chartProduction = function () {
             text: 'Capacity and Production, MW'
         },
         xAxis: {
-            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            type: 'datetime',
+            labels: {
+              format: '{value:%l-%M-%S-%P}',
+              rotation: 90,
+              align: 'left'
+            }
         },
         yAxis: {
             title: {
                 text: 'MW'
             }
+        },
+        tooltip: {
+          pointFormat: "{point.y:,.0f}"
         },
         plotOptions: {
             column: {
@@ -50,10 +59,16 @@ $.fn.chartProduction = function () {
         },
         series: [{
             name: 'Spare capacity',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            dataLabels: {
+              format: '{point.y:,.0f}',
+            }
         }, {
             name: 'Production',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            dataLabels: {
+              format: '{point.y:,.0f}',
+            }
         }]
     });
 }
