@@ -23,3 +23,4 @@ angular.module('producerFrontEnd', [
       redirectTo: '/'
     });
 })
+.run(function(getSocket) {})

@@ -2,7 +2,6 @@
 
 
 $.fn.chartProfit = function (socket) {
-
     $('#profit').highcharts({
         chart: {
             type: 'column',
@@ -12,7 +11,6 @@ $.fn.chartProfit = function (socket) {
                     var costs = this.series[0];
                     var profit = this.series[1];
                     var self = this;
-
                     
   
                     socket.on('transaction', function (data) {

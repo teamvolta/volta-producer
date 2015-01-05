@@ -1,8 +1,14 @@
 
 
 
-$.fn.chartProduction = function (socket) {
-
+$.fn.chartProduction = function (scope) {
+    var deductArrays = function (x, y) {
+      var result=[];
+      for (var i = 0; i<x.length; i++) {
+        result[i] = x[i] - y[i];
+      }
+      return result;
+    }
     $('#production').highcharts({
         chart: {
             type: 'column',
@@ -12,16 +18,16 @@ $.fn.chartProduction = function (socket) {
                     var capacity = this.series[0];
                     var production = this.series[1];
                     var self = this;
-
-                    
   
-                    socket.on('transaction', function (data) {
-                        console.log("data", data);
+                    scope.$on('newInfo', function (event, dataFromSocket) {
+                        console.log("data", dataFromSocket);
+                        var data = dataFromSocket[dataFromSocket.length-1];
                         capacity.addPoint(data.capacity-data.energy, false, true);
                         production.addPoint(data.energy, false, true);
                         timeblock.push(data.blockStart);
                         self.redraw();
                     });
+                    // scope.$digest();
                 }
               }  
         },
@@ -29,7 +35,7 @@ $.fn.chartProduction = function (socket) {
             text: ''
         },
         xAxis: {
-            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            categories: _.pluck(scope.dataFromSocket, "blockStart"),
             type: 'datetime',
             labels: {
               format: '{value:%l-%M-%S-%P}',
@@ -59,7 +65,7 @@ $.fn.chartProduction = function (socket) {
         },
         series: [{
             name: 'Spare capacity',
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            data: deductArrays(_.pluck(scope.dataFromSocket, "capacity"), _.pluck(scope.dataFromSocket, "energy")),
             dataLabels: {
               format: '{point.y:,.0f}',
               color: '#1874cd'
@@ -68,7 +74,7 @@ $.fn.chartProduction = function (socket) {
             borderColor: '#1874cd'
         }, {
             name: 'Production',
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            data: _.pluck(scope.dataFromSocket, "energy"),
             dataLabels: {
               format: '{point.y:,.0f}',
             },
