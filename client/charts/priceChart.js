@@ -62,13 +62,15 @@ $.fn.chartPrice = function (socket) {
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
-            }
+            },
+            color: '#007f00'
         },  {
             name: 'Costs per MWH',
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
-            }
+            },
+            color: '#ff7256'
         }]
     });
 }

@@ -62,13 +62,18 @@ $.fn.chartProduction = function (socket) {
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
-            }
+              color: '#1874cd'
+            },
+            color: '#f0ffff',
+            borderColor: '#1874cd'
         }, {
             name: 'Production',
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
-            }
+            },
+            color: '#1874cd',
+            borderColor: '#1874cd'
         }]
     });
 }
