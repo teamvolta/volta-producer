@@ -1,6 +1,6 @@
 angular.module('producerFrontEnd.controls', [])
 
-.controller('ControlsController', function ($scope, $location) {
+.controller('ControlsController', function ($scope, sendControls) {
  
 
 });
