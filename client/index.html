@@ -3,26 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <title>Producer</title>
-  <!-- Bootstrap Core CSS -->
+    <!-- Bootstrap Core CSS -->
     <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- MetisMenu CSS -->
     <link href="./bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
     <!-- Custom CSS -->
     <link href="./dist/css/sb-admin-2.css" rel="stylesheet">
-
-
     <!-- Custom Fonts -->
     <link href="./bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	
     <div id="wrapper">
-
-        <!-- Navigation -->
-        
-
+        <!-- Navigation -->       
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -31,15 +23,13 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div ng-view></div>
-            <!-- /.row -->
-            
+            <div ng-view></div>            
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
+    <!-- underscore -->
     <script src="./bower_components/underscore/underscore-min.js"></script>
     <!-- jQuery -->
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
@@ -50,12 +40,10 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="./bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-
     <!-- Custom Theme JavaScript -->
     <script src="./dist/js/sb-admin-2.js"></script>
     
     <!-- Highchart dependencies -->
-    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
     <script src="./dist/js/highcharts.js"></script>
     <!-- Specific charts -->
     <script src="./charts/productionChart.js"></script>
@@ -66,21 +54,14 @@
         <p> {{ data }} </p>
     </div> -->
 
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="templates/routing.js"></script>
-  <script src="templates/controls.js"></script>
-  <script src="templates/dashboard.js"></script>
-  <script src="templates/transactions.js"></script>
-  <script src="templates/services.js"></script>
-  <!--<script src="records.js"></script>-->
-  <!-- <script src="socketClient.js"></script> -->
-  <script src="bower_components/socket.io-client/socket.io.js"></script>
-  <!-- <script> -->
-    <!-- // var socket = io('http://localhost:8010/subscriptions');
-    /*$('body').chartProduction(socket);
-    $('body').chartPrice(socket);
-    $('body').chartProfit(socket);*/ -->
-  <!-- </script> -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="templates/routing.js"></script>
+    <script src="templates/controls.js"></script>
+    <script src="templates/dashboard.js"></script>
+    <script src="templates/transactions.js"></script>
+    <script src="templates/services.js"></script>
+    <!--<script src="records.js"></script>-->
+    <script src="bower_components/socket.io-client/socket.io.js"></script>
 </body>
 </html>
