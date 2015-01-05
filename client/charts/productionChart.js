@@ -1,7 +1,8 @@
 
 
+
 $.fn.chartProduction = function () {
-    
+
     $('#production').highcharts({
         chart: {
             type: 'column',
@@ -15,12 +16,10 @@ $.fn.chartProduction = function () {
                     var socket = io('http://localhost:8010/subscriptions');
   
                     socket.on('transaction', function (data) {
-                        // when a sample arrives we plot it
                         console.log("data", data);
                         capacity.addPoint(data.capacity, false, true);
                         production.addPoint(data.energy, false, true);
                         timeblock.push(data.blockStart);
-                        //timeblock.shift();
                         self.redraw();
                     });
                 }
