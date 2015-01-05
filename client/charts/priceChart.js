@@ -2,7 +2,9 @@
 
 
 $.fn.chartPrice = function (socket) {
-
+  console.log("chart");
+  var y = $('#price').text()
+  console.log("y", y);
     $('#price').highcharts({
         chart: {
             type: 'spline',
