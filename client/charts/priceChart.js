@@ -1,24 +1,24 @@
 
 
 
-$.fn.chartProduction = function (socket) {
+$.fn.chartPrice = function (socket) {
 
-    $('#production').highcharts({
+    $('#price').highcharts({
         chart: {
-            type: 'column',
+            type: 'spline',
             events: {
                 load: function() {
                     var timeblock = this.xAxis[0].categories;
-                    var capacity = this.series[0];
-                    var production = this.series[1];
+                    var price = this.series[0];
+                    var costs = this.series[1];
                     var self = this;
 
                     
   
                     socket.on('transaction', function (data) {
                         console.log("data", data);
-                        capacity.addPoint(data.capacity-data.energy, false, true);
-                        production.addPoint(data.energy, false, true);
+                        price.addPoint(data.price, false, true);
+                        costs.addPoint(data.costs, false, true);
                         timeblock.push(data.blockStart);
                         self.redraw();
                     });
@@ -39,8 +39,9 @@ $.fn.chartProduction = function (socket) {
         },
         yAxis: {
             title: {
-                text: 'MW'
-            }
+                text: 'USD'
+            },
+            min: 0
         },
         tooltip: {
           pointFormat: "{point.y:,.0f}"
@@ -58,14 +59,14 @@ $.fn.chartProduction = function (socket) {
             }
         },
         series: [{
-            name: 'Spare capacity',
+            name: 'Price',
             data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
             dataLabels: {
               format: '{point.y:,.0f}',
             }
-        }, {
-            name: 'Production',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+        },  {
+            name: 'Costs per MWH',
+            data: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
             dataLabels: {
               format: '{point.y:,.0f}',
             }
