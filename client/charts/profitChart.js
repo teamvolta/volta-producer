@@ -59,14 +59,14 @@ $.fn.chartProfit = function (socket) {
         },
         series: [{
             name: 'Costs',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
             },
             color: '#ff7256'
         }, {
             name: 'Profit',
-            data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             dataLabels: {
               format: '{point.y:,.0f}',
             },
