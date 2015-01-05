@@ -1,24 +1,24 @@
 
 
 
-$.fn.chartProduction = function (socket) {
+$.fn.chartProfit = function (socket) {
 
-    $('#production').highcharts({
+    $('#profit').highcharts({
         chart: {
             type: 'column',
             events: {
                 load: function() {
                     var timeblock = this.xAxis[0].categories;
-                    var capacity = this.series[0];
-                    var production = this.series[1];
+                    var costs = this.series[0];
+                    var profit = this.series[1];
                     var self = this;
 
                     
   
                     socket.on('transaction', function (data) {
                         console.log("data", data);
-                        capacity.addPoint(data.capacity-data.energy, false, true);
-                        production.addPoint(data.energy, false, true);
+                        costs.addPoint(data.costs * data.energy, false, true);
+                        profit.addPoint((data.price-data.costs)*data.energy, false, true);
                         timeblock.push(data.blockStart);
                         self.redraw();
                     });
@@ -39,7 +39,7 @@ $.fn.chartProduction = function (socket) {
         },
         yAxis: {
             title: {
-                text: 'MW'
+                text: 'USD'
             }
         },
         tooltip: {
@@ -58,17 +58,19 @@ $.fn.chartProduction = function (socket) {
             }
         },
         series: [{
-            name: 'Spare capacity',
+            name: 'Costs',
             data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
             dataLabels: {
               format: '{point.y:,.0f}',
-            }
+            },
+            color: '#ff7256'
         }, {
-            name: 'Production',
+            name: 'Profit',
             data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
             dataLabels: {
               format: '{point.y:,.0f}',
-            }
+            },
+            color: '#007f00'
         }]
     });
 }

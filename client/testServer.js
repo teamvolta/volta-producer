@@ -23,6 +23,7 @@ setInterval(function() {
 	transactionId: "random"
  };
  data.energy = data.capacity*Math.random();
+ data.costs = data.price*Math.random();
 }, 3000);
 
 
