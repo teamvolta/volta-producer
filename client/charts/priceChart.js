@@ -14,7 +14,7 @@ $.fn.chartPrice = function (scope) {
 
                     
   
-                    scope.$on('newInfo', function (event, dataFromSocket) {
+                    scope.ourOn('chartPrice', function (dataFromSocket) {
                         var data = dataFromSocket[dataFromSocket.length-1];
                         price.addPoint(data.price, false, true);
                         costs.addPoint(data.costs, false, true);

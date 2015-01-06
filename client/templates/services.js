@@ -11,18 +11,22 @@ angular.module('producerFrontEnd.services', [])
                          energy: 0,
                          costs: 0})
   };
-
+  var listeners = {};
   socket.on('transaction', function (data) {
     dataFromSocket.push(data);
     if (dataFromSocket.length > targetLength) {
       dataFromSocket.shift();
     }
-    $rootScope.$broadcast('newInfo', dataFromSocket);
+    for (var key in listeners) {
+      listeners[key](dataFromSocket); 
+    };
     // console.log("service", dataFromSocket);
   });
 
   return {
-      socket: socket,
+      ourOn: function(id, callback) {
+        listeners[id] = callback;
+      },
       dataFromSocket: dataFromSocket
     }
 })

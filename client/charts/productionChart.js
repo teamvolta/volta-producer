@@ -19,7 +19,7 @@ $.fn.chartProduction = function (scope) {
                     var production = this.series[1];
                     var self = this;
   
-                    scope.$on('newInfo', function (event, dataFromSocket) {
+                    scope.ourOn('chartProduction', function (dataFromSocket) {
                         console.log("data", dataFromSocket);
                         var data = dataFromSocket[dataFromSocket.length-1];
                         capacity.addPoint(data.capacity-data.energy, false, true);
