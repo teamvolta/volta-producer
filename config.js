@@ -6,7 +6,12 @@ exports.development = {
   pricePerMWH: 9001,
   minCapacity: 0,
   maxCapacity: 100,
-  currCapacity: 100
+  currCapacity: 100,
+  discoveryIp: 'http://104.40.181.157:8001',
+  ip: 'http://localhost:8001',
+  id: Math.floor(Math.random() * 100000),
+  role: 'producer',
+  subRole: 'producer'
 };
 
 exports.production = {
