@@ -3,8 +3,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./config')[process.env.NODE_ENV];
 var reporter = new (require('./adminReporter'))();
 global.reporter = reporter;
-var producer = new (require('./simulation'))(config);
-var socket = require('socket.io-client')(config.systemIp);
+var producer = new (require('./utils/simulation'))(config);
 var express = require('express');
 var app = express();
 var cors = require('cors');
@@ -64,43 +63,51 @@ app.get('/api/dashboard', function (req, res){
 console.log('Running the server file again');
 console.log('NODE_ENV', process.env.NODE_ENV); //to check whether it's been set to production when deployed
 
-//signal when connection is established
-socket.on('connect', function(){
-  console.log('producer online');
-});
 
-//receives request from system admin for supply capacity(mwh) and price($/mwh) for bidding
-socket.on('requestSupply', function(data){
-  console.log('requestSupply');
-  var supply = producer.getSupply();
-  // User socketId for now
-  supply.producerId = socket.io.engine.id;
-  socket.emit('reportSupply', supply);
-  var timeblockRequest = {
-    timeblock: data.blockStart,
-    duration: data.blockDuration,    
-    capacity: supply.maxCapacity,
-    cost: supply.pricePerMWH
-  };
-  helpers.addData(timeblockRequest);
-});
+var discoveryClient = new (require('./utils/discoverClient'))(config);
+discoveryClient.discover('system', 'system', function(err,data) {
 
-//receives request from system admin to set capacity based on market-clearing price
-// Receive time-slot and duration from system operator
-// {
-//   timeslot: UTC ms,
-//   duration: ms
-// }
-socket.on('changeProduction', function(data){
-  producer.setCapacity(data);
-  // Not needed right now
-  // socket.emit('reportCapacity', producer.setCapacity(data));
-  var timeblockRequest = {
-    timeblock: data.blockStart,
-    duration: data.blockDuration,    
-    production: data.production,
-    price: data.pricePerMWH
-  };
-  helpers.updateData(timeblockRequest);
+  var socket = require('socket.io-client')(data.ip + '/producers');
+  //signal when connection is established
+  socket.on('connect', function(){
+    console.log('producer online');
+  });
+
+  //receives request from system admin for supply capacity(mwh) and price($/mwh) for bidding
+  socket.on('requestSupply', function(data){
+    console.log('requestSupply');
+    var supply = producer.getSupply();
+    // User socketId for now
+    supply.producerId = socket.io.engine.id;
+    socket.emit('reportSupply', supply);
+    var timeblockRequest = {
+      timeblock: data.blockStart,
+      duration: data.blockDuration,    
+      capacity: supply.maxCapacity,
+      cost: supply.pricePerMWH
+    };
+    helpers.addData(timeblockRequest);
+  });
+
+  //receives request from system admin to set capacity based on market-clearing price
+  // Receive time-slot and duration from system operator
+  // {
+  //   timeslot: UTC ms,
+  //   duration: ms
+  // }
+  socket.on('changeProduction', function(data){
+    producer.setCapacity(data);
+    // Not needed right now
+    // socket.emit('reportCapacity', producer.setCapacity(data));
+    var timeblockRequest = {
+      timeblock: data.blockStart,
+      duration: data.blockDuration,    
+      production: data.production,
+      price: data.pricePerMWH
+    };
+    helpers.updateData(timeblockRequest);
+  });
+
+
 });
 
