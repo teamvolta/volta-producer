@@ -55,7 +55,7 @@ app.get('/api/dashboard', function (req, res){
   var timeblockRequest = {
     timeblock: 1420046277204
 //    timeblock: req.body.timeblock;
-  }
+  };
   console.log("get request received");
   helpers.getData(timeblockRequest, res);
 });

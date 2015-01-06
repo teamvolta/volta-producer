@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var stubs = require('./stubs.js');
 var testConfig = stubs.testConfig;
 // var socket = require('socket.io-client')(testConfig.systemIP);
-var Producer = require('../simulation');
+var Producer = require('../utils/simulation');
 
 describe('test for tests', function(){ //mock test, to test gulp and deployment
   it('tests should run', function(){
