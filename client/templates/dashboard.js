@@ -3,7 +3,7 @@ angular.module('producerFrontEnd.dashboard', [])
 .controller('DashboardController', function ($scope, getSocket) {
    angular.extend($scope, getSocket);
    
-  $scope.$on('newInfo', function (event, dataFromSocket) {
+  $scope.ourOn('DashboardController', function (dataFromSocket) {
       $scope.dataFromSocket = dataFromSocket;
     });
   $('body').chartProduction($scope);

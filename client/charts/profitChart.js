@@ -30,7 +30,7 @@ $.fn.chartProfit = function (scope) {
                     var self = this;
                     
   
-                    scope.$on('newInfo', function (event, dataFromSocket) {
+                    scope.ourOn('newInfo', function (dataFromSocket) {
                         var data = dataFromSocket[dataFromSocket.length-1];
                         costs.addPoint(data.costs * data.energy, false, true);
                         profit.addPoint((data.price-data.costs)*data.energy, false, true);
