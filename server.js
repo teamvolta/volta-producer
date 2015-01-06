@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost/producerdb'); // connect to mongo database
 
 app.use(cors());
 
-//Fake data to test the db;
+/*//Fake data to test the db;
 var timeblockRequest = {
     timeblock: 1420046277204,
     duration: 100,    
@@ -38,7 +38,7 @@ var newblock = {
 };
 
 helpers.updateData(newblock);
-//////////////////////
+//////////////////////*/
 
 // Serve admin
 app.get('/admin', function(req, res){
@@ -67,7 +67,7 @@ console.log('NODE_ENV', process.env.NODE_ENV); //to check whether it's been set 
 var discoveryClient = new (require('./utils/discoverClient'))(config);
 discoveryClient.discover('system', 'system', function(err,data) {
 
-  var socket = require('socket.io-client')(data.ip + '/producers');
+  var socket = require('socket.io-client')(JSON.parse(data.body)[0].ip + '/producers');
   //signal when connection is established
   socket.on('connect', function(){
     console.log('producer online');
@@ -86,7 +86,7 @@ discoveryClient.discover('system', 'system', function(err,data) {
       capacity: supply.maxCapacity,
       cost: supply.pricePerMWH
     };
-    helpers.addData(timeblockRequest);
+    // helpers.addData(timeblockRequest);
   });
 
   //receives request from system admin to set capacity based on market-clearing price
@@ -105,7 +105,7 @@ discoveryClient.discover('system', 'system', function(err,data) {
       production: data.production,
       price: data.pricePerMWH
     };
-    helpers.updateData(timeblockRequest);
+    // helpers.updateData(timeblockRequest);
   });
 
 
