@@ -27,7 +27,8 @@ angular.module('producerFrontEnd.services', [])
       ourOn: function(id, callback) {
         listeners[id] = callback;
       },
-      dataFromSocket: dataFromSocket
+      dataFromSocket: dataFromSocket,
+      targetLength: targetLength
     }
 })
 .factory('sendControls', function ($http) {
