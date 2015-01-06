@@ -9,3 +9,20 @@
 .setPrice {
 	
 }
+
+.form-50 {
+  width: 50%;
+}
+
+.form-inline {
+  display: inline;
+}
+
+.div-inline {
+  display: inline;
+  padding-left: 2%;
+}
+
+.label-block {
+  display: block;
+}
