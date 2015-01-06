@@ -1,26 +1,54 @@
 angular.module('producerFrontEnd.services', [])
 
-.factory('getSocket', function () {
+.factory('getSocket', function (getCapacityCosts) {
   var socket = io('http://localhost:8010/subscriptions');
   var dataFromSocket = []; //it will behave as a queue
   var targetLength = 10;
-  for (var i = 0; i<targetLength; i++) {
-  	dataFromSocket.push({price: 0,
-	                     capacity: 0,
-	                     blockStart: i+1,
-                         energy: 0,
-                         costs: 0})
+  var lastDataPoint = {capacity: 0,
+                       costs: 0,
+                       price: 0,
+                       energy: 0,
+                       blockStart: 0};
+
+  for (var i = 0; i<targetLength; i++) {  //create the initial array of length 10 with the right structure
+  	var newestPoint = {};
+    _.extend(newestPoint, lastDataPoint);
+    dataFromSocket.push(newestPoint);
   };
-  var listeners = {};
-  socket.on('transaction', function (data) {
-    dataFromSocket.push(data);
-    if (dataFromSocket.length > targetLength) {
-      dataFromSocket.shift();
+
+  var updateData = function (dataArray, newPoint, arLength) {  //helper function to make dataFromSocket behave like a queue
+    var newerPoint = {};
+    _.extend(newerPoint, newPoint);
+    dataArray.push(newerPoint);
+    if (dataArray.length > arLength) {
+      dataArray.shift();
     }
+  }
+
+  var listeners = {};
+
+  getCapacityCosts.capCostsOn('getSocketFactoryId', function (data) {
+    lastDataPoint.capacity = data.capacity;
+    lastDataPoint.costs = data.costs;
+    lastDataPoint.energy = Math.min(lastDataPoint.energy, data.capacity);
+    console.log("point", lastDataPoint);
+    updateData(dataFromSocket, lastDataPoint, targetLength);
+    console.log("dataFromSocket", dataFromSocket);
+    for (var key in listeners) {
+      listeners[key](dataFromSocket); 
+    };   
+  })
+
+  socket.on('transaction', function (data) {
+    lastDataPoint.energy = data.energy;
+    lastDataPoint.price = data.price;
+    lastDataPoint.blockStart = data.blockStart;
+    console.log("point2", lastDataPoint);
+    updateData(dataFromSocket, lastDataPoint, targetLength);
+    console.log("dataFromSocket2", dataFromSocket);
     for (var key in listeners) {
       listeners[key](dataFromSocket); 
     };
-    // console.log("service", dataFromSocket);
   });
 
   return {
@@ -29,6 +57,22 @@ angular.module('producerFrontEnd.services', [])
       },
       dataFromSocket: dataFromSocket,
       targetLength: targetLength
+    }
+})
+.factory('getCapacityCosts', function () {
+  var socket = io('http://localhost:8001/dashboard');
+  var listeners = {};
+  socket.on('capacityAndCosts', function (data) {
+    console.log("capData", data);
+    for (var key in listeners) {
+      listeners[key](data); 
+    };
+  });
+
+  return {
+      capCostsOn: function(id, callback) {
+        listeners[id] = callback;
+      }
     }
 })
 .factory('sendControls', function ($http) {

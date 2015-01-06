@@ -3,7 +3,7 @@ var Producer = function(config){
   this.minCapacity = config.minCapacity;
   this.maxCapacity = config.maxCapacity;
   this.currCapacity = config.currCapacity;
-
+  this.events = {};
   //PLEASE DEFINE 'reporter' OTHERWISE ERROR ON TESTING
   // reporter.register('production', function(){return this}.bind(this))
 };
@@ -35,5 +35,21 @@ Producer.prototype.setCapacity = function(data){
   }
   return cap;
 };
+
+Producer.prototype.on = function(event, cb){
+  if(cb && event){
+    this.events[event] = this.events[event] || [];
+    this.events[event].push(cb);
+  }
+};
+
+Producer.prototype.trigger = function(event, data){
+  if(this.events[event]){
+    this.events[event].forEach(function(el){
+      el(data);
+    })
+  }
+};
+
 
 module.exports = Producer;

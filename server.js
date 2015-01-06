@@ -63,9 +63,19 @@ app.get('/api/dashboard', function (req, res){
 });
 
 app.post('/api/dashboard', function (req, res) {
-  console.log("request post", req.body);
-  producer.maxCapacity = req.body.capacityInput;
-  producer.pricePerMWH = req.body.costsInput;
+  console.log('request post', req.body);
+  if (! (typeof req.body.capacityInput === 'undefined' ||
+         req.body.capacityInput ==='')) {
+    var newCapacity = Number(req.body.capacityInput);
+    producer.maxCapacity = newCapacity;    
+    producer.trigger('capacChange', newCapacity);
+  }
+  if (! (typeof req.body.costsInput === 'undefined' ||
+         req.body.costsInput ==='')) {
+    var newCosts = Number(req.body.costsInput);
+    producer.pricePerMWH = newCosts;
+    producer.trigger('costsChange', newCosts);     
+  }
 })
 
 console.log('Running the server file again');
@@ -104,18 +114,43 @@ discoveryClient.discover('system', 'system', function(err,data) {
   //   duration: ms
   // }
   socket.on('changeProduction', function(data){
-    producer.setCapacity(data);
+    producer.setCapacity(data); //setCapacity method defines the current output
     // Not needed right now
     // socket.emit('reportCapacity', producer.setCapacity(data));
-    var timeblockRequest = {
+    /*var timeblockRequest = {
       timeblock: data.blockStart,
       duration: data.blockDuration,    
       production: data.production,
       price: data.pricePerMWH
-    };
+    };*/
     // helpers.updateData(timeblockRequest);
   });
 
+  producer.on('capacChange', function (data) {
+    producer.setCapacity(data); //setCapacity method defines the current output
+  });
 
 });
 
+var ioServe = require('socket.io')(server);
+
+
+// ioServe.set('origins','http://localhost:*');
+
+var clientNsp = ioServe.of('/dashboard');
+clientNsp.on('connection', function(socket){
+  console.log('a user connected'); 
+  socket.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+  producer.on('capacChange', function() {
+    socket.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+  });
+  producer.on('costsChange', function() {
+    socket.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+  })
+});
+
+
+
+
+/*module.exports.server = server;
+module.exports.producer = producer;*/
