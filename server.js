@@ -7,6 +7,7 @@ var producer = new (require('./utils/simulation'))(config);
 var express = require('express');
 var app = express();
 var cors = require('cors');
+var bodyParser  = require('body-parser');
 var mongoose = require('mongoose');
 var helpers = require('./db/dbHelpers.js');
 // Setup reporter
@@ -16,10 +17,11 @@ var server = require('http').Server(app);
 // Setup server.
 server.listen(config.port);
 
-mongoose.connect('mongodb://localhost/producerdb'); // connect to mongo database named producerdb
+// mongoose.connect('mongodb://localhost/producerdb'); // connect to mongo database named producerdb
 //should change the url
 
 app.use(cors());
+app.use(bodyParser.json());
 
 /*//Fake data to test the db;
 var timeblockRequest = {
@@ -52,13 +54,19 @@ app.get('/api/stats', function(req, res){
 
 // Send data to the front-end
 app.get('/api/dashboard', function (req, res){
-  var timeblockRequest = {
+  /*var timeblockRequest = {
     timeblock: 1420046277204
 //    timeblock: req.body.timeblock;
-  };
+  };*/
   console.log("get request received");
-  helpers.getData(timeblockRequest, res);
+  // helpers.getData(timeblockRequest, res);
 });
+
+app.post('/api/dashboard', function (req, res) {
+  console.log("request post", req.body);
+  producer.maxCapacity = req.body.capacityInput;
+  producer.pricePerMWH = req.body.costsInput;
+})
 
 console.log('Running the server file again');
 console.log('NODE_ENV', process.env.NODE_ENV); //to check whether it's been set to production when deployed
@@ -80,13 +88,13 @@ discoveryClient.discover('system', 'system', function(err,data) {
     // User socketId for now
     supply.producerId = socket.io.engine.id;
     socket.emit('reportSupply', supply);
-    var timeblockRequest = {
+    /*var timeblockRequest = {
       timeblock: data.blockStart,
       duration: data.blockDuration,    
       capacity: supply.maxCapacity,
       cost: supply.pricePerMWH
     };
-    // helpers.addData(timeblockRequest);
+     helpers.addData(timeblockRequest);*/
   });
 
   //receives request from system admin to set capacity based on market-clearing price

@@ -1,6 +1,6 @@
 angular.module('producerFrontEnd.services', [])
 
-.factory('getSocket', function ($rootScope) {
+.factory('getSocket', function () {
   var socket = io('http://localhost:8010/subscriptions');
   var dataFromSocket = []; //it will behave as a queue
   var targetLength = 10;
@@ -32,5 +32,13 @@ angular.module('producerFrontEnd.services', [])
     }
 })
 .factory('sendControls', function ($http) {
-  
+  var sendControls = function(capacityInput, costsInput) {
+      console.log("input", capacityInput, costsInput);
+      
+      return $http.post('http://localhost:8001/api/dashboard',
+        {'capacityInput': capacityInput, 'costsInput': costsInput})
+    };
+  return {
+    sendControls: sendControls
+  }
 })
