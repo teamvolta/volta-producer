@@ -31,7 +31,6 @@ angular.module('producerFrontEnd.services', [])
     lastDataPoint.capacity = data.capacity;
     lastDataPoint.costs = data.costs;
     lastDataPoint.energy = Math.min(lastDataPoint.energy, data.capacity);
-    console.log("point", lastDataPoint);
     updateData(dataFromSocket, lastDataPoint, targetLength);
     console.log("dataFromSocket", dataFromSocket);
     for (var key in listeners) {
@@ -43,7 +42,6 @@ angular.module('producerFrontEnd.services', [])
     lastDataPoint.energy = data.energy;
     lastDataPoint.price = data.price;
     lastDataPoint.blockStart = data.blockStart;
-    console.log("point2", lastDataPoint);
     updateData(dataFromSocket, lastDataPoint, targetLength);
     console.log("dataFromSocket2", dataFromSocket);
     for (var key in listeners) {
