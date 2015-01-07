@@ -75,11 +75,10 @@ angular.module('producerFrontEnd.services', [])
 })
 .factory('sendControls', function ($http) {
   var sendControls = function(capacityInput, costsInput) {
-      console.log("input", capacityInput, costsInput);
-      
+      console.log("input", capacityInput, costsInput);  
       return $http.post('http://localhost:8001/api/dashboard',
-        {'capacityInput': capacityInput, 'costsInput': costsInput})
-    };
+        {'capacityInput': capacityInput, 'costsInput': costsInput});
+  };
   return {
     sendControls: sendControls
   }
