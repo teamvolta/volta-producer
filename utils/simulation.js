@@ -17,6 +17,9 @@ Producer.prototype.getSupply = function(){
   };
 };
 
+
+////TO DO: output should change only starting from a certain moment of time
+// unless there is a sudden change in maximum capacity 
 Producer.prototype.setCapacity = function(data){
   var cap = {
     current: this.currCapacity
@@ -33,6 +36,7 @@ Producer.prototype.setCapacity = function(data){
   if (capRequired > this.minCapacity && capRequired < this.maxCapacity){
     this.currCapacity = capRequired - this.minCapacity;
   }
+  console.log("new output value", this.currCapacity);
   return cap;
 };
 

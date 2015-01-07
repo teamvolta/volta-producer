@@ -17,30 +17,8 @@ var server = require('http').Server(app);
 // Setup server.
 server.listen(config.port);
 
-// mongoose.connect('mongodb://localhost/producerdb'); // connect to mongo database named producerdb
-//should change the url
-
 app.use(cors());
 app.use(bodyParser.json());
-
-/*//Fake data to test the db;
-var timeblockRequest = {
-    timeblock: 1420046277204,
-    duration: 100,    
-    capacity: 200,
-    cost: 300
-  };
-helpers.addData(timeblockRequest);
-
-var newblock = {
-    timeblock: 1420046277204,
-    duration: 100,
-    production: 150,
-    price: 320
-};
-
-helpers.updateData(newblock);
-//////////////////////*/
 
 // Serve admin
 app.get('/admin', function(req, res){
@@ -54,12 +32,7 @@ app.get('/api/stats', function(req, res){
 
 // Send data to the front-end
 app.get('/api/dashboard', function (req, res){
-  /*var timeblockRequest = {
-    timeblock: 1420046277204
-//    timeblock: req.body.timeblock;
-  };*/
   console.log("get request received");
-  // helpers.getData(timeblockRequest, res);
 });
 
 app.post('/api/dashboard', function (req, res) {
@@ -81,76 +54,83 @@ app.post('/api/dashboard', function (req, res) {
 console.log('Running the server file again');
 console.log('NODE_ENV', process.env.NODE_ENV); //to check whether it's been set to production when deployed
 
+var producerId;
 
 var discoveryClient = new (require('./utils/discoverClient'))(config);
 discoveryClient.discover('system', 'system', function(err,data) {
-
+  console.log("first discov");
   var socket = require('socket.io-client')(JSON.parse(data.body)[0].ip + '/producers');
   //signal when connection is established
   socket.on('connect', function(){
+    producerId = socket.io.engine.id;
     console.log('producer online');
   });
 
-  //receives request from system admin for supply capacity(mwh) and price($/mwh) for bidding
-  socket.on('requestSupply', function(data){
-    console.log('requestSupply');
-    var supply = producer.getSupply();
-    // User socketId for now
-    supply.producerId = socket.io.engine.id;
-    socket.emit('reportSupply', supply);
-    /*var timeblockRequest = {
-      timeblock: data.blockStart,
-      duration: data.blockDuration,    
-      capacity: supply.maxCapacity,
-      cost: supply.pricePerMWH
-    };
-     helpers.addData(timeblockRequest);*/
-  });
+  /*discoveryClient.discover('system', 'accounting', function(err, data) {
+    console.log('-------NNPROD---------', JSON.parse(data.body)[0].ip + '/subscriptions');
+    account = require('socket.io-client')(JSON.parse(data.body)[0].ip + '/subscriptions');
+    account.on('connect', function () {
+      console.log('Producer connected to account!');
+      account.emit('subscribe', {
+        key: 'seller',
+        subkey: producerId
+      });
+    });*/
 
-  //receives request from system admin to set capacity based on market-clearing price
-  // Receive time-slot and duration from system operator
-  // {
-  //   timeslot: UTC ms,
-  //   duration: ms
-  // }
-  socket.on('changeProduction', function(data){
-    producer.setCapacity(data); //setCapacity method defines the current output
-    // Not needed right now
-    // socket.emit('reportCapacity', producer.setCapacity(data));
-    /*var timeblockRequest = {
-      timeblock: data.blockStart,
-      duration: data.blockDuration,    
-      production: data.production,
-      price: data.pricePerMWH
-    };*/
-    // helpers.updateData(timeblockRequest);
-  });
+    //receives request from system admin for supply capacity(mwh) and price($/mwh) for bidding
+    socket.on('requestSupply', function(data){
+      console.log('requestSupply');
+      var supply = producer.getSupply();
+      // User socketId for now
+      supply.producerId = producerId;
+      socket.emit('reportSupply', supply);
+    });
 
-  producer.on('capacChange', function (data) {
-    producer.setCapacity(data); //setCapacity method defines the current output
-  });
+    //receives request from system admin to set capacity based on market-clearing price
+    // Receive time-slot and duration from system operator
+    // {
+    //   timeslot: UTC ms,
+    //   duration: ms
+    // }
+    socket.on('changeProduction', function(data){
+      console.log("received CONTROLS", data);
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].producerId === producerId) {
+          console.log("producer id found");
+          producer.setCapacity(data[i].productionGoal); //setCapacity method defines the current output
+          return;
+        }
+      }
+    });
 
+    producer.on('capacChange', function (data) {
+      producer.setCapacity(data); //setCapacity method defines the current output   
+    });
+
+    /*account.on('transaction', function(transaction) {
+      console.log('TRANSACTION FOR PROD---------',transaction);
+    });*/
+
+
+ // });
 });
 
+/////////////////
+//Connection to the front-end
+////////////////
 var ioServe = require('socket.io')(server);
 
 
-// ioServe.set('origins','http://localhost:*');
-
 var clientNsp = ioServe.of('/dashboard');
-clientNsp.on('connection', function(socket){
+clientNsp.on('connection', function(socketFront){
   console.log('a user connected'); 
-  socket.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+  socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
   producer.on('capacChange', function() {
-    socket.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+    socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
   });
   producer.on('costsChange', function() {
-    socket.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+    socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
   })
 });
 
 
-
-
-/*module.exports.server = server;
-module.exports.producer = producer;*/
