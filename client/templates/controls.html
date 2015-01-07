@@ -14,13 +14,13 @@
                                     <div class="form-group">
                                         <label class="label-block">Maximum capacity</label>
                                         <input class="form-control form-inline form-50" placeholder="Enter power plant maximum capacity in MW" ng-model="capacityInput">
-                                        <div class = "div-inline"> Current maximum capacity value is </div>
+                                        <div class = "div-inline"> Current maximum capacity value is {{capacity}} MW. </div>
                                     </div>
                                 
                                     <div class="form-group">
                                         <label class="label-block">Costs</label>
                                         <input class="form-control form-inline form-50" placeholder="Enter power plant costs per MWH" ng-model="costsInput">
-                                        <div class = "div-inline"> Current costs per MWH are </div>
+                                        <div class = "div-inline"> Current costs per MWH are {{costs}} USD/MWH. </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary" ng-click="sendControls(capacityInput, costsInput)">Submit</button>
                                     
