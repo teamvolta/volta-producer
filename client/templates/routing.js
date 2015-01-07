@@ -23,4 +23,4 @@ angular.module('producerFrontEnd', [
       redirectTo: '/'
     });
 })
-.run(function(getSocket) {})
+.run(function(getSocket, getCapacityCosts) {})
