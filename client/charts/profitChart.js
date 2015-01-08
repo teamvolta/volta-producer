@@ -54,7 +54,7 @@ $.fn.chartProfit = function (scope) {
         },
         yAxis: {
             title: {
-                text: 'USD/MWH'
+                text: 'USD'
             }
         },
         tooltip: {

@@ -38,7 +38,7 @@ $.fn.chartPrice = function (scope) {
         },
         yAxis: {
             title: {
-                text: 'USD'
+                text: 'USD/MWH'
             },
             min: 0
         },
