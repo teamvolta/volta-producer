@@ -41,12 +41,9 @@ describe('Producer class setup', function(){
     var capacity;
     beforeEach('run listener methods', function(){
       supply = producer.getSupply();
-      capacity = producer.setCapacity(
-        {
-          capacity: 25//for testing purposes
-        }
-      );
+      capacity = producer.setCapacity(25); //for testing purposes       
     });
+
     describe('getSupply()', function(){
       it('should have "getSupply" method', function(){
         expect(producer).to.respondTo('getSupply');
@@ -77,8 +74,7 @@ describe('Producer class setup', function(){
         expect(capacity).to.have.property('current');
       });
       it('current value should be between min and max capacities', function(){
-        expect(capacity.current).to.be.above(testConfig.minCapacity);
-        expect(capacity.current).to.be.below(testConfig.maxCapacity);
+        expect(capacity.current).to.be.within(testConfig.minCapacity, testConfig.maxCapacity);
       });
     });
   });
