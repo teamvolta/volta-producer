@@ -1,14 +1,17 @@
 angular.module('producerFrontEnd.services', [])
 
 .factory('getSocket', function (getCapacityCosts) {
-  var socket = io('http://localhost:8010/subscriptions');
+  var socket = io('http://localhost:8001/transactionsdata');
   var dataFromSocket = []; //it will behave as a queue
   var targetLength = 10;
-  var lastDataPoint = {capacity: 0,
+  var lastDataPoint = {
+                       capacity: 0,
                        costs: 0,
                        price: 0,
                        energy: 0,
-                       blockStart: 0};
+                       blockStart: 0,
+                       blockDuration: 0
+                      };
 
   for (var i = 0; i<targetLength; i++) {  //create the initial array of length 10 with the right structure
   	var newestPoint = {};
@@ -42,8 +45,9 @@ angular.module('producerFrontEnd.services', [])
     lastDataPoint.energy = data.energy;
     lastDataPoint.price = data.price;
     lastDataPoint.blockStart = data.blockStart;
+    lastDataPoint.blockDuration = data.blockDuration;
     updateData(dataFromSocket, lastDataPoint, targetLength);
-    console.log("dataFromSocket2", dataFromSocket);
+    console.log('dataFromSocket2', dataFromSocket);
     for (var key in listeners) {
       listeners[key](dataFromSocket); 
     };
