@@ -25,7 +25,7 @@ Producer.prototype.setCapacity = function(data){
     current: this.currCapacity
   };
 
-  var capRequired = data.capacity;
+  var capRequired = data;
 
   if (capRequired > this.maxCapacity){
     this.currCapacity = this.maxCapacity;

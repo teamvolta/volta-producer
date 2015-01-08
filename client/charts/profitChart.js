@@ -3,18 +3,18 @@
 
 $.fn.chartProfit = function (scope) {
 
-    var calculateInitialCosts = function (costsPerUnitArray, productionArray) {
+    var calculateInitialCosts = function (costsPerUnitArray, productionArray, durationArray) {
       var result=[];
       for (var i = 0; i<costsPerUnitArray.length; i++) {
-        result[i] = costsPerUnitArray[i] * productionArray[i];
+        result[i] = costsPerUnitArray[i] * productionArray[i] * durationArray[i]/1000/3600;
       }
       return result;
     }
     
-    var calculateInitialProfit = function (pricePerUnitArray, costsPerUnitArray, productionArray) {
+    var calculateInitialProfit = function (pricePerUnitArray, costsPerUnitArray, productionArray, durationArray) {
       var result=[];
       for (var i = 0; i<pricePerUnitArray.length; i++) {
-        result[i] = (pricePerUnitArray[i] - costsPerUnitArray[i]) * productionArray[i];
+        result[i] = (pricePerUnitArray[i] - costsPerUnitArray[i]) * productionArray[i] * durationArray[i]/1000/3600;
       }
       return result;
     }
@@ -32,8 +32,8 @@ $.fn.chartProfit = function (scope) {
   
                     scope.ourOn('newInfo', function (dataFromSocket) {
                         var data = dataFromSocket[dataFromSocket.length-1];
-                        costs.addPoint(data.costs * data.energy, false, true);
-                        profit.addPoint((data.price-data.costs)*data.energy, false, true);
+                        costs.addPoint(data.costs * data.energy * data.blockDuration/1000/3600, false, true);
+                        profit.addPoint((data.price - data.costs) * data.energy * data.blockDuration/1000/3600, false, true);
                         timeblock.push(data.blockStart);
                         self.redraw();
                     });
@@ -54,7 +54,7 @@ $.fn.chartProfit = function (scope) {
         },
         yAxis: {
             title: {
-                text: 'USD'
+                text: 'USD/MWH'
             }
         },
         tooltip: {
@@ -74,14 +74,14 @@ $.fn.chartProfit = function (scope) {
         },
         series: [{
             name: 'Costs',
-            data: calculateInitialCosts(_.pluck(scope.dataFromSocket, "costs"), _.pluck(scope.dataFromSocket, "energy")),
+            data: calculateInitialCosts(_.pluck(scope.dataFromSocket, "costs"), _.pluck(scope.dataFromSocket, "energy"), _.pluck(scope.dataFromSocket, "blockDuration")),
             dataLabels: {
               format: '{point.y:,.0f}',
             },
             color: '#ff7256'
         }, {
             name: 'Profit',
-            data: calculateInitialProfit(_.pluck(scope.dataFromSocket, "price"), _.pluck(scope.dataFromSocket, "costs"), _.pluck(scope.dataFromSocket, "energy")),
+            data: calculateInitialProfit(_.pluck(scope.dataFromSocket, "price"), _.pluck(scope.dataFromSocket, "costs"), _.pluck(scope.dataFromSocket, "energy"), _.pluck(scope.dataFromSocket, "blockDuration")),
             dataLabels: {
               format: '{point.y:,.0f}',
             },

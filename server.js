@@ -58,7 +58,6 @@ var producerId;
 
 var discoveryClient = new (require('./utils/discoverClient'))(config);
 discoveryClient.discover('system', 'system', function(err,data) {
-  console.log("first discov");
   var socket = require('socket.io-client')(JSON.parse(data.body)[0].ip + '/producers');
   //signal when connection is established
   socket.on('connect', function(){
@@ -66,7 +65,7 @@ discoveryClient.discover('system', 'system', function(err,data) {
     console.log('producer online');
   });
 
-  /*discoveryClient.discover('system', 'accounting', function(err, data) {
+  discoveryClient.discover('system', 'accounting', function(err, data) {
     console.log('-------NNPROD---------', JSON.parse(data.body)[0].ip + '/subscriptions');
     account = require('socket.io-client')(JSON.parse(data.body)[0].ip + '/subscriptions');
     account.on('connect', function () {
@@ -75,7 +74,7 @@ discoveryClient.discover('system', 'system', function(err,data) {
         key: 'seller',
         subkey: producerId
       });
-    });*/
+    });
 
     //receives request from system admin for supply capacity(mwh) and price($/mwh) for bidding
     socket.on('requestSupply', function(data){
@@ -107,30 +106,40 @@ discoveryClient.discover('system', 'system', function(err,data) {
       producer.setCapacity(data); //setCapacity method defines the current output   
     });
 
-    /*account.on('transaction', function(transaction) {
-      console.log('TRANSACTION FOR PROD---------',transaction);
-    });*/
+    /////////////////
+    //Connection to the front-end
+    ////////////////
+    var ioServe = require('socket.io')(server);
 
 
- // });
-});
+    var clientCapCostsNsp = ioServe.of('/dashboard');
+    clientCapCostsNsp.on('connection', function(socketFront){
+      console.log('a user connected'); 
+      socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+      producer.on('capacChange', function() {
+        socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+      });
+      producer.on('costsChange', function() {
+        socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
+      });
+    });
 
-/////////////////
-//Connection to the front-end
-////////////////
-var ioServe = require('socket.io')(server);
+    var clientMarketNsp = ioServe.of('/transactionsdata');
+    clientMarketNsp.on('connection', function(socketFront){
+      console.log('a user connected to the market socket'); 
+      account.on('transaction', function(transaction) {
+        console.log('TRANSACTION FOR PROD---------',transaction);
+        socketFront.emit('transaction', {
+                                         price: transaction.price,
+                                        energy: transaction.energy,
+                                        blockStart: transaction.block.blockStart,
+                                        blockDuration: transaction.block.blockDuration
+                                        });
+      });           
+    });
 
+  }); //end of accounting discovery
+}); // end of system discovery
 
-var clientNsp = ioServe.of('/dashboard');
-clientNsp.on('connection', function(socketFront){
-  console.log('a user connected'); 
-  socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
-  producer.on('capacChange', function() {
-    socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
-  });
-  producer.on('costsChange', function() {
-    socketFront.emit('capacityAndCosts', { capacity: producer.maxCapacity, costs: producer.pricePerMWH});
-  })
-});
 
 
