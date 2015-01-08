@@ -32,7 +32,7 @@ app.get('/api/stats', function(req, res){
 
 // Send data to the front-end
 app.get('/api/dashboard', function (req, res){
-  console.log("get request received");
+  console.log('get request received');
 });
 
 app.post('/api/dashboard', function (req, res) {
@@ -49,7 +49,7 @@ app.post('/api/dashboard', function (req, res) {
     producer.pricePerMWH = newCosts;
     producer.trigger('costsChange', newCosts);     
   }
-})
+});
 
 console.log('Running the server file again');
 console.log('NODE_ENV', process.env.NODE_ENV); //to check whether it's been set to production when deployed
@@ -67,7 +67,7 @@ discoveryClient.discover('system', 'system', function(err,data) {
 
   discoveryClient.discover('system', 'accounting', function(err, data) {
     console.log('-------NNPROD---------', JSON.parse(data.body)[0].ip + '/subscriptions');
-    account = require('socket.io-client')(JSON.parse(data.body)[0].ip + '/subscriptions');
+    var account = require('socket.io-client')(JSON.parse(data.body)[0].ip + '/subscriptions');
     account.on('connect', function () {
       console.log('Producer connected to account!');
       account.emit('subscribe', {
@@ -92,10 +92,10 @@ discoveryClient.discover('system', 'system', function(err,data) {
     //   duration: ms
     // }
     socket.on('changeProduction', function(data){
-      console.log("received CONTROLS", data);
+      console.log('received CONTROLS', data);
       for (var i = 0; i < data.length; i++) {
         if (data[i].producerId === producerId) {
-          console.log("producer id found");
+          console.log('producer id found');
           producer.setCapacity(data[i].productionGoal); //setCapacity method defines the current output
           return;
         }
