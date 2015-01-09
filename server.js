@@ -42,12 +42,14 @@ app.post('/api/dashboard', function (req, res) {
     var newCapacity = Number(req.body.capacityInput);
     producer.maxCapacity = newCapacity;    
     producer.trigger('capacChange', newCapacity);
+    res.sendStatus(200);
   }
   if (! (typeof req.body.costsInput === 'undefined' ||
          req.body.costsInput ==='')) {
     var newCosts = Number(req.body.costsInput);
     producer.pricePerMWH = newCosts;
-    producer.trigger('costsChange', newCosts);     
+    producer.trigger('costsChange', newCosts);   
+    res.sendStatus(200);  
   }
 });
 
