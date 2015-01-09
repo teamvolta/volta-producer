@@ -63,9 +63,12 @@ angular.module('producerFrontEnd.services', [])
 })
 .factory('getCapacityCosts', function () {
   var socket = io('http://localhost:8001/dashboard');
+  var plantState = {};
   var listeners = {};
   socket.on('capacityAndCosts', function (data) {
     console.log("capData", data);
+    plantState.costs = data.costs;
+    plantState.capacity = data.capacity;
     for (var key in listeners) {
       listeners[key](data); 
     };
@@ -74,7 +77,8 @@ angular.module('producerFrontEnd.services', [])
   return {
       capCostsOn: function(id, callback) {
         listeners[id] = callback;
-      }
+      },
+      plantState: plantState
     }
 })
 .factory('sendControls', function ($http) {

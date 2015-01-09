@@ -21,8 +21,8 @@ $.fn.chartProduction = function (scope) {
   
                     scope.ourOn('chartProduction', function (dataFromSocket) {
                         var data = dataFromSocket[dataFromSocket.length-1];
-                        capacity.addPoint(data.capacity-data.energy, false, true);
-                        production.addPoint(data.energy, false, true);
+                        capacity.addPoint(data.capacity-Math.min(data.energy, data.capacity), false, true);
+                        production.addPoint(Math.min(data.energy, data.capacity), false, true);
                         timeblock.push(data.blockStart);
                         self.redraw();
                     });
