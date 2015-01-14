@@ -68,7 +68,17 @@ discoveryClient.discover('system', 'system', function(err,data) {
 
   discoveryClient.discover('system', 'accounting', function(err, data) {
     console.log('-------NNPROD---------', JSON.parse(data.body)[0].ip + '/subscriptions');
-    var account = require('socket.io-client')(JSON.parse(data.body)[0].ip + '/subscriptions');
+    
+    ////Looking for the accounting server ip
+    var accountingIP;
+    var discovArray = JSON.parse(data.body);
+    for (var i = 0; i < discovArray.length; i++) {
+      if (discovArray[i].id && discovArray[i].id === "5") {
+        accountingIP = discovArray[i].ip;
+      } 
+    }
+    ////////////////////////////
+    var account = require('socket.io-client')(accountingIP + '/subscriptions');
     account.on('connect', function () {
       console.log('Producer connected to account!');
       account.emit('subscribe', {
