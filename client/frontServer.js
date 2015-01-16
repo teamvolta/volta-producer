@@ -7,6 +7,6 @@ var server = require('http').Server(app);
 // Setup server.
 server.listen(3000);
 
-app.use(express.static(__dirname ));
+app.use(express.static(__dirname));
 
 console.log("Running the front server file");

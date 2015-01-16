@@ -1,32 +1,19 @@
 .blockStart {
   font-style: italic;
 }
-
-.output {
-
-}
-
-.setPrice {
-	
-}
-
-.form-50 {
+.output {} .setPrice {} .form-50 {
   width: 50%;
 }
-
 .form-inline {
   display: inline;
 }
-
 .div-inline {
   display: inline;
   padding-left: 2%;
 }
-
 .label-block {
   display: block;
 }
-
 .help-block {
   color: #a94442;
 }
