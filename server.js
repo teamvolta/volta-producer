@@ -73,7 +73,7 @@ discoveryClient.discover('system', 'system', function(err,data) {
     var accountingIP;
     var discovArray = JSON.parse(data.body);
     for (var i = 0; i < discovArray.length; i++) {
-      if (discovArray[i].id && discovArray[i].id === "5") {
+      if (discovArray[i].id && discovArray[i].id === '5') {
         accountingIP = discovArray[i].ip;
       } 
     }

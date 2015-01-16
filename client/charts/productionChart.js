@@ -1,5 +1,5 @@
 $.fn.chartProduction = function(scope) {
-    
+
   var deductArrays = function(x, y) {
     var result = [];
     for (var i = 0; i < x.length; i++) {
@@ -68,8 +68,7 @@ $.fn.chartProduction = function(scope) {
       },
       color: '#f0ffff',
       borderColor: '#1874cd'
-    },
-    {
+    }, {
       name: 'Production',
       data: _.pluck(scope.dataFromSocket, "energy"),
       dataLabels: {

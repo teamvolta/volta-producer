@@ -2,11 +2,11 @@ $.fn.chartProfit = function(scope) {
 
   var calculateInitialCosts = function(costsPerUnitArray, productionArray, durationArray) {
     var result = [];
-      for (var i = 0; i < costsPerUnitArray.length; i++) {
-        result[i] = costsPerUnitArray[i] * productionArray[i] * durationArray[i] / 1000 / 3600;
-      }
-      return result;
+    for (var i = 0; i < costsPerUnitArray.length; i++) {
+      result[i] = costsPerUnitArray[i] * productionArray[i] * durationArray[i] / 1000 / 3600;
     }
+    return result;
+  }
 
   var calculateInitialProfit = function(pricePerUnitArray, costsPerUnitArray, productionArray, durationArray) {
     var result = [];
@@ -15,7 +15,7 @@ $.fn.chartProfit = function(scope) {
     }
     return result;
   }
-  
+
   $('#profit').highcharts({
     chart: {
       type: 'column',
@@ -74,8 +74,7 @@ $.fn.chartProfit = function(scope) {
         format: '{point.y:,.0f}',
       },
       color: '#ff7256'
-    },
-    {
+    }, {
       name: 'Profit',
       data: calculateInitialProfit(_.pluck(scope.dataFromSocket, "price"), _.pluck(scope.dataFromSocket, "costs"), _.pluck(scope.dataFromSocket, "energy"), _.pluck(scope.dataFromSocket, "blockDuration")),
       dataLabels: {
