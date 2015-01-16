@@ -1,12 +1,14 @@
-var express = require('express');
+var express = require('../node_modules/express');
+var config = require('../config')[process.env.NODE_ENV];
 var app = express();
 
 var server = require('http').Server(app);
 
 
 // Setup server.
-server.listen(3000);
+//
+server.listen(config.portFront);
 
 app.use(express.static(__dirname));
 
-console.log("Running the front server file");
+console.log("Running the front server file" + config.portFront);

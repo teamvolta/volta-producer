@@ -10,7 +10,8 @@ exports.development = {
   ip: 'http://localhost:8001',
   id: Math.floor(Math.random() * 100000),
   role: 'producer',
-  subRole: 'producer'
+  subRole: 'producer',
+  portFront: 3000
 };
 
 exports.production = {
@@ -25,5 +26,6 @@ exports.production = {
   ip: 'http://productest.azurewebsites.net/producers',
   id: Math.floor(Math.random() * 100000),
   role: 'producer',
-  subRole: 'producer'
+  subRole: 'producer',
+  portFront: process.env.PORTIMP
 };
