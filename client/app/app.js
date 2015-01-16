@@ -8,15 +8,15 @@ angular.module('producerFrontEnd', [
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'templates/dashboard.html',
+      templateUrl: 'app/dashboard.html',
       controller: 'DashboardController'
     })
     .when('/transactions', {
-      templateUrl: 'templates/transactions.html',
+      templateUrl: 'app/transactions.html',
       controller: 'TransactionsController'
     })
     .when('/controls', {
-      templateUrl: 'templates/controls.html',
+      templateUrl: 'app/controls.html',
       controller: 'ControlsController'
     })
     .otherwise({
