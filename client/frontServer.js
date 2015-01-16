@@ -1,4 +1,4 @@
-var express = require('../node_modules/express');
+var express = require('../node_modules/express/lib/express.js');
 var config = require('../config')[process.env.NODE_ENV];
 var app = express();
 
