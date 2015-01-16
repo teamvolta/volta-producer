@@ -16,6 +16,7 @@ app.use(express.static(__dirname + '/public'));
 var server = require('http').Server(app);
 // Setup server.
 server.listen(config.port);
+console.log('producer server listening on port ' + config.port);
 
 app.use(cors());
 app.use(bodyParser.json());
