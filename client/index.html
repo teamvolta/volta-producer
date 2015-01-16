@@ -1,32 +1,32 @@
 <doctype! html>
 <html ng-app='producerFrontEnd'>
-<head>
-  <meta charset="utf-8" />
-  <title>Producer</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- MetisMenu CSS -->
-    <link href="./bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="./dist/css/sb-admin-2.css" rel="stylesheet">
-     <link href="./styles/style.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="./bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Producer</title>
+      <!-- Bootstrap Core CSS -->
+      <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- MetisMenu CSS -->
+      <link href="./bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+      <!-- Custom CSS -->
+      <link href="./dist/css/sb-admin-2.css" rel="stylesheet">
+       <link href="./styles/style.css" rel="stylesheet">
+      <!-- Custom Fonts -->
+      <link href="./bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
     <div id="wrapper">
-        <!-- Navigation -->       
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Producer Dashboard</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div ng-view></div>            
+      <!-- Navigation -->       
+      <div id="page-wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="page-header">Producer Dashboard</h1>
+          </div>
+          <!-- /.col-lg-12 -->
         </div>
-        <!-- /#page-wrapper -->
+        <!-- /.row -->
+        <div ng-view></div>            
+      </div>
+      <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
 
@@ -46,23 +46,19 @@
     
     <!-- Highchart dependencies -->
     <script src="./dist/js/highcharts.js"></script>
+
     <!-- Specific charts -->
     <script src="./charts/productionChart.js"></script>
     <script src="./charts/priceChart.js"></script>
     <script src="./charts/profitChart.js"></script>
 
-    <!-- <div ng-app="records" ng-controller="recordsCtrl">
-        <p> {{ data }} </p>
-    </div> -->
-
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="app/app.js"></script>
-    <script src="app/controls.js"></script>
-    <script src="app/dashboard.js"></script>
-    <script src="app/transactions.js"></script>
-    <script src="app/services.js"></script>
-    <!--<script src="records.js"></script>-->
     <script src="bower_components/socket.io-client/socket.io.js"></script>
-</body>
+    <script src="app/services.js"></script>
+    <script src="app/dashboard.js"></script>
+    <script src="app/controls.js"></script>
+    <script src="app/transactions.js"></script>
+    <script src="app/app.js"></script>
+  </body>
 </html>
