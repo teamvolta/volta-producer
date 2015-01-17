@@ -3,6 +3,7 @@ var run = require('gulp-run');
 var gulpNgConfig = require('gulp-ng-config');
 
 gulp.task('default', function() {
+  console.log("proc", process.env);
   if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
   	run('gulp configprod').exec(); 
   } else {
