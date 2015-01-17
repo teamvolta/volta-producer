@@ -137,7 +137,7 @@ if [ -e "$DEPLOYMENT_TARGET/client/bower.json" ]; then
 fi
 
 #6. Run the server
-if [ -e "$DEPLOYMENT_TARGET/client/frontServer.js" ]
+if [ -e "$DEPLOYMENT_TARGET/client/frontServer.js" ]; then
   cd "$DEPLOYMENT_TARGET/client"
   node frontServer.js
   exitWithMessageOnError "Failed to launch frontend server"
