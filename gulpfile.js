@@ -55,6 +55,14 @@ gulp.task('upload', function() {
   run('git push azure').exec(); //this runs the deployment command
 });
 
+gulp.task('runserver', function () {
+  if (process.env.SITE_TYPE && process.env.SITE_TYPE === "frontend") {
+    run('node client/frontServer.js').exec(); 
+  } else {
+    run('node server.js').exec(); 
+  }
+});
+
 /////////////
 //Main tasks
 /////////////
