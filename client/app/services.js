@@ -1,6 +1,7 @@
 angular.module('producerFrontEnd.services', [])
-  .factory('getSocket', function(getCapacityCosts) {
-    var socket = io('http://localhost:8001/transactionsdata');
+  .factory('getSocket', function(getCapacityCosts, backend) {
+    var api = backend + '/transactionsdata';
+    var socket = io(api);
     var dataFromSocket = []; //it will behave as a queue
     var targetLength = 10;
     var lastDataPoint = {
@@ -62,8 +63,9 @@ angular.module('producerFrontEnd.services', [])
       targetLength: targetLength
     }
   })
-  .factory('getCapacityCosts', function() {
-    var socket = io('http://localhost:8001/dashboard');
+  .factory('getCapacityCosts', function(backend) {
+    var api = backend + '/dashboard';
+    var socket = io(api);
     var plantState = {};
     var listeners = {};
     socket.on('capacityAndCosts', function(data) {
@@ -82,10 +84,11 @@ angular.module('producerFrontEnd.services', [])
       plantState: plantState
     }
   })
-  .factory('sendControls', function($http) {
+  .factory('sendControls', function($http, backend) {
     var sendControls = function(capacityInput, costsInput) {
       console.log("input", capacityInput, costsInput);
-      return $http.post('http://localhost:8001/api/dashboard', {
+      var api = backend + '/api/dashboard';
+      return $http.post(api, {
         'capacityInput': capacityInput,
         'costsInput': costsInput
       });

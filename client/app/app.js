@@ -3,7 +3,7 @@ angular.module('producerFrontEnd', [
   'producerFrontEnd.dashboard',
   'producerFrontEnd.transactions',
   'producerFrontEnd.services',
-  'ngRoute'
+  'ngRoute','producerFrontEnd.config'
 ])
 .config(function($routeProvider, $httpProvider) {
   $routeProvider

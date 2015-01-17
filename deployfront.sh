@@ -136,6 +136,14 @@ if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
   cd - > /dev/null
 fi
 
+#6. Define env variables
+if [ -e "$DEPLOYMENT_TARGET/gulpfile.js" ]; then
+  cd "$DEPLOYMENT_TARGET"
+  ./node_modules/.bin/gulp default
+  exitWithMessageOnError "error setting env variables in angular"
+  cd - > /dev/null
+fi
+
 #6. Run the server
 # if [ -e "$DEPLOYMENT_TARGET/client/frontServer.js" ]; then
 #   cd "$DEPLOYMENT_TARGET/client"
