@@ -6,7 +6,8 @@
     "start": "node frontServer.js"
   },
   
-  "dependencies": {   
+  "dependencies": {
+    "express": "^4.10.6"   
   }
   
 }
