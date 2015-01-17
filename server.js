@@ -18,7 +18,11 @@ var server = require('http').Server(app);
 server.listen(config.port);
 console.log('producer server listening on port ' + config.port);
 
-app.use(cors());
+var corsOptions = {
+  origin: 'http://http://producfrontend.azurewebsites.net'
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Serve admin
@@ -60,7 +64,7 @@ app.post('/api/dashboard', function(req, res) {
 });
 
 console.log('Running the server file again');
-console.log('NODE_ENV', process.env.NODE_ENV); //to check whether it's been set to production when deployed
+console.log('NODE_ENV', process.env); //to check whether it's been set to production when deployed
 
 var producerId;
 

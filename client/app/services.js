@@ -65,6 +65,7 @@ angular.module('producerFrontEnd.services', [])
   })
   .factory('getCapacityCosts', function(backend) {
     var api = backend + '/dashboard';
+    console.log("back", api);
     var socket = io(api);
     var plantState = {};
     var listeners = {};
