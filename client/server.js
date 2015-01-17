@@ -14,6 +14,7 @@ app.get('/', function (req, res) {
   res.send('Hello World Front!')
 });
 
+
 app.use(express.static(__dirname));
 
 console.log("Running the front server file " + config.portFront);
