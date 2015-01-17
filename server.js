@@ -18,8 +18,17 @@ var server = require('http').Server(app);
 server.listen(config.port);
 console.log('producer server listening on port ' + config.port);
 
-var corsOptions = {
+/*var corsOptions = {
   origin: 'http://http://producfrontend.azurewebsites.net'
+};*/
+
+var whitelist = ['http://producfrontend.azurewebsites.net', 'http://localhost'];
+
+var corsOptions = {
+  origin: function(origin, callback){
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted);
+  }
 };
 
 app.use(cors(corsOptions));
