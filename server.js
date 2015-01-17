@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 // Serve admin
 app.get('/', function (req, res) {
-  res.send('Hello World Front!')
+  res.send('Hello World Back!')
 }); //for testing purposes
 
 app.get('/admin', function(req, res) {
@@ -39,6 +39,7 @@ app.get('/api/stats', function(req, res) {
 app.get('/api/dashboard', function(req, res) {
   console.log('get request received');
 });
+
 
 
 app.post('/api/dashboard', function(req, res) {
