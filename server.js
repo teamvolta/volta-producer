@@ -40,6 +40,7 @@ app.get('/api/dashboard', function(req, res) {
   console.log('get request received');
 });
 
+
 app.post('/api/dashboard', function(req, res) {
   console.log('request post', req.body);
   if (!(typeof req.body.capacityInput === 'undefined' ||
