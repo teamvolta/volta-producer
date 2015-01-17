@@ -1,0 +1,12 @@
+{
+  "name": "volta-producer-front",
+  "version": "1.0.0",
+  "description": "Producer node for Volta smart grid",
+  "scripts": {
+    "start": "node frontServer.js"
+  },
+  
+  "dependencies": {   
+  }
+  
+}
