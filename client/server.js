@@ -10,9 +10,9 @@ var server = require('http').Server(app);
 //
 server.listen(config.portFront);
 
-app.get('/', function (req, res) {
+/*app.get('/', function (req, res) {
   res.send('Hello World Front!')
-});
+});*/
 
 
 app.use(express.static(__dirname));
