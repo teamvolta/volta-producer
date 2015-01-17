@@ -137,11 +137,12 @@ if [ -e "$DEPLOYMENT_TARGET/client/bower.json" ]; then
 fi
 
 #6. Run the server
-cd "$DEPLOYMENT_TARGET/client"
-node frontServer.js
-exitWithMessageOnError "Failed to launch frontend server"
-cd - > /dev/null
-
+if [ -e "$DEPLOYMENT_TARGET/client/frontServer.js" ]
+  cd "$DEPLOYMENT_TARGET/client"
+  node frontServer.js
+  exitWithMessageOnError "Failed to launch frontend server"
+  cd - > /dev/null
+fi
 ##################################################################################################################################
 
 # Post deployment stub
