@@ -102,7 +102,7 @@ echo Handling node.js deployment.
 
 # 1. KuduSync
 if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
-  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
+  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE/client" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
   exitWithMessageOnError "Kudu Sync failed"
 fi
 
@@ -118,22 +118,22 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd - > /dev/null
 fi
 
-# 4. Test
-if [ -e "$DEPLOYMENT_TARGET/gulpfile.js" ]; then
-  cd "$DEPLOYMENT_TARGET"
-  ./node_modules/.bin/gulp default
-  exitWithMessageOnError "test failed"
-  cd - > /dev/null
-fi
+# # 4. Test
+# if [ -e "$DEPLOYMENT_TARGET/gulpfile.js" ]; then
+#   cd "$DEPLOYMENT_TARGET"
+#   ./node_modules/.bin/gulp default
+#   exitWithMessageOnError "test failed"
+#   cd - > /dev/null
+# fi
 
 # 5. Install bower packages
-if [ -e "$DEPLOYMENT_TARGET/client/bower.json" ]; then
-  cd "$DEPLOYMENT_TARGET/client"
+if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
+  cd "$DEPLOYMENT_TARGET"
   # eval $NPM_CMD install bower
   # exitWithMessageOnError "installing bower failed"
   ../node_modules/.bin/bower install
   exitWithMessageOnError "bower failed"
-  # cd - > /dev/null
+  cd - > /dev/null
 fi
 
 #6. Run the server

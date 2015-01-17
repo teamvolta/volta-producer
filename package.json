@@ -4,8 +4,7 @@
   "description": "Producer node for Volta smart grid",
   "main": "index.js",
   "scripts": {
-    "test": "gulp test",
-    "start": "gulp runserver"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
