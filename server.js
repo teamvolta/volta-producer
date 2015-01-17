@@ -22,6 +22,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Serve admin
+app.get('/', function (req, res) {
+  res.send('Hello World Front!')
+}); //for testing purposes
+
 app.get('/admin', function(req, res) {
   res.sendFile(__dirname + '/public/admin.html');
 });
