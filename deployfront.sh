@@ -139,7 +139,7 @@ fi
 #6. Define env variables
 if [ -e "$DEPLOYMENT_TARGET/gulpfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
-  ./node_modules/.bin/gulp default
+  ./node_modules/.bin/gulp configprod
   exitWithMessageOnError "error setting env variables in angular"
   cd - > /dev/null
 fi

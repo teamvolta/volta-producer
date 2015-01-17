@@ -15,7 +15,7 @@ exports.development = {
 };
 
 exports.production = {
-  port: process.env.PORT,
+  port: process.env.APPSETTING_PRODUCER_PORT,
   systemIp: 'http://gridsystemtest.azurewebsites.net/producers', //to replace later
   productionId: Math.random().toString(36).substr(2),
   pricePerMWH: 70,
@@ -27,5 +27,5 @@ exports.production = {
   id: Math.floor(Math.random() * 100000),
   role: 'producer',
   subRole: 'producer',
-  portFront: process.env.PORT
+  portFront: process.env.APPSETTING_PRODUCER_FRONT_PORT
 };
