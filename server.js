@@ -64,7 +64,7 @@ app.post('/api/dashboard', function(req, res) {
 });
 
 console.log('Running the server file again');
-console.log('NODE_ENV', process.env); //to check whether it's been set to production when deployed
+console.log('NODE_ENV', process.env.NODE_ENV); //to check whether it's been set to production when deployed
 
 var producerId;
 
