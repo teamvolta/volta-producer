@@ -1,0 +1,17 @@
+{
+  "name": "volta-producer-front",
+  "version": "1.0.0",
+  "description": "Producer node for Volta smart grid",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bower": "^1.3.12",
+    "express": "^4.10.6"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-ng-config": "^1.0.0",
+    "gulp-run": "^1.6.6"
+  }
+}
