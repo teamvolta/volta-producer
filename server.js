@@ -21,7 +21,7 @@ console.log('producer server listening on port ' + config.port);
 /*var corsOptions = {
   origin: 'http://http://producfrontend.azurewebsites.net'
 };*/
-
+console.log("cap2", producer.maxCapacity);
 
 var whitelist = ['http://producfrontend.azurewebsites.net', 'http://localhost'];
 
