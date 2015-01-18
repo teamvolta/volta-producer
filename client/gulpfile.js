@@ -13,10 +13,11 @@ gulp.task('default', function() {
 });
 
 gulp.task('configprod', function() {
+  var backend = process.env.APP_SETTING_BACKEND_IP;
   gulp.src('config.json')
     .pipe(gulpNgConfig('producerFrontEnd.config', {
       constants: {
-        backend: 'http://productest.azurewebsites.net'
+        backend: backend
       }
      }))
     .pipe(gulp.dest('./app'));
