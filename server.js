@@ -22,6 +22,8 @@ console.log('producer server listening on port ' + config.port);
   origin: 'http://http://producfrontend.azurewebsites.net'
 };*/
 
+console.log("costs", config.pricePerMWH);
+
 var whitelist = ['http://producfrontend.azurewebsites.net', 'http://localhost'];
 
 var corsOptions = {
@@ -36,7 +38,7 @@ app.use(bodyParser.json());
 
 // Serve admin
 app.get('/', function (req, res) {
-  res.send('Hello World Back!')
+  res.send('Hello World Back!');
 }); //for testing purposes
 
 app.get('/admin', function(req, res) {

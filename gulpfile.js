@@ -56,7 +56,7 @@ gulp.task('upload', function() {
 });
 
 gulp.task('runserver', function () {
-  if (process.env.SITE_TYPE && process.env.SITE_TYPE === "frontend") {
+  if (process.env.SITE_TYPE && process.env.SITE_TYPE === 'frontend') {
     run('node client/frontServer.js').exec(); 
   } else {
     run('node server.js').exec(); 
