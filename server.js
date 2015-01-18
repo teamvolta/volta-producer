@@ -22,10 +22,6 @@ console.log('producer server listening on port ' + config.port);
   origin: 'http://http://producfrontend.azurewebsites.net'
 };*/
 
-console.log("costs", config.pricePerMWH);
-console.log("capacity", config.maxCapacity);
-console.log("costs2", producer.pricePerMWH);
-console.log("cap2", producer.maxCapacity);
 
 var whitelist = ['http://producfrontend.azurewebsites.net', 'http://localhost'];
 
