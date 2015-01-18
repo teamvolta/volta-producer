@@ -25,6 +25,7 @@ gulp.task('configprod', function() {
     .pipe(gulp.dest('./app'));
 })
 
+
 gulp.task('configdev', function() {
   gulp.src('config.json')
     .pipe(gulpNgConfig('producerFrontEnd.config'))
