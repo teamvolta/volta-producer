@@ -13,9 +13,9 @@ gulp.task('default', function() {
 });
 
 gulp.task('configprod', function() {
-  var backend = process.env.APP_SETTING_BACKEND_IP;
+  var backend = process.env.BACKEND_IP;
   console.log("backgulp", backend);
-  console.log("pro", process.env)
+  console.log("pro", process.env);
   gulp.src('config.json')
     .pipe(gulpNgConfig('producerFrontEnd.config', {
       constants: {
