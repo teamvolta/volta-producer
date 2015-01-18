@@ -126,15 +126,15 @@ if [ -e "$DEPLOYMENT_TARGET/gulpfile.js" ]; then
   cd - > /dev/null
 fi
 
-# 5. Install bower packages
-if [ -e "$DEPLOYMENT_TARGET/client/bower.json" ]; then
-  cd "$DEPLOYMENT_TARGET/client"
-  # eval $NPM_CMD install bower
-  # exitWithMessageOnError "installing bower failed"
-  ../node_modules/.bin/bower install
-  exitWithMessageOnError "bower failed"
-  cd - > /dev/null
-fi
+# # 5. Install bower packages
+# if [ -e "$DEPLOYMENT_TARGET/client/bower.json" ]; then
+#   cd "$DEPLOYMENT_TARGET/client"
+#   # eval $NPM_CMD install bower
+#   # exitWithMessageOnError "installing bower failed"
+#   ../node_modules/.bin/bower install
+#   exitWithMessageOnError "bower failed"
+#   cd - > /dev/null
+# fi
 
 #6. Run the server
 # if [ -e "$DEPLOYMENT_TARGET/client/frontServer.js" ]; then
