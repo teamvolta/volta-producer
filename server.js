@@ -23,7 +23,7 @@ console.log('producer server listening on port ' + config.port);
 };*/
 console.log("cap2", producer.maxCapacity);
 
-var whitelist = ['http://producfrontend.azurewebsites.net', 'http://localhost'];
+var whitelist = ['http://producfrontend.azurewebsites.net', 'http://localhost', 'http://producer2.azurewebsites.net'];
 
 var corsOptions = {
   origin: function(origin, callback){
