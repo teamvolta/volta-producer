@@ -23,7 +23,7 @@ console.log('producer server listening on port ' + config.port);
 };*/
 
 
-var whitelist = ['http://producfrontend.azurewebsites.net', 'http://localhost', 'http://producer2.azurewebsites.net'];
+var whitelist = ['http://producfrontend.azurewebsites.net', 'http://localhost', 'http://producer2front.azurewebsites.net'];
 
 var corsOptions = {
   origin: function(origin, callback){
