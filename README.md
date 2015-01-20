@@ -12,10 +12,11 @@ Also see:
 ##Table of Contents
 
 1. [Team](#team)
-2. [Requirements](#requirements)
+2. [Deployment](#deployment)
 3. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    2. [Distributive System Tool](#distributive-system-tool)
+    1. [Requirements](#requirements)
+    2. [Installing Dependencies](#installing-dependencies)
+    3. [Distributive System Tool](#distributive-system-tool)
 4. [Roadmap](#roadmap)
 
 ##Team
@@ -25,10 +26,16 @@ Also see:
 * Scrum Master: [Michael Lom](https://github.com/mlom)
 * Development Team: [Nikhil Ballaney](https://github.com/NBallaney)
 
-##Requirements
-* Node.js
+##Deployment
+To see a deployed version of the Volta Energy system, please visit the following:
+* [Volta Energy-System Dashboard](voltaenergy.io)
+* [Volta Energy-Consumer Dashboard](consumer1.azurewebsites.net)
+* [Volta Energy-Producer Dashboard](producer1.azurewebsites.net)
 
 ##Development
+
+###Requirements
+* Node.js
 
 ###Installing Dependencies
 
