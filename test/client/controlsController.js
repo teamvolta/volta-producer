@@ -7,9 +7,18 @@ describe('ControlsController', function(){
 
   beforeEach(inject(function($controller, $rootScope){
     scope = $rootScope.$new();
-    controller = $controller('ControlsController', {$scope: scope})
-    $controller = _$controller_;
+    controller = $controller('ControlsController', {$scope: scope});
   }));
 
-  describe('')
+  it('should set $scope.capacity to the configuration file', function(){
+    //todo
+  });
+
+  it('should set $scope.costs to the configuration file', function(){
+    //todo
+  });
+
+  it('$scope.sendControls should run', function(){
+    //todo 
+  });
 });

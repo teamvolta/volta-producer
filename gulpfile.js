@@ -16,7 +16,6 @@ gulp.task('install', function() {
 //////////////
 //Helper tasks
 //////////////
-
 gulp.task('mochaTest', function() { //I am still not sure what it actually does
   // passing shared module in all tests (according to docs)
   return gulp.src('test/test.js', {
@@ -30,7 +29,7 @@ gulp.task('mochaTest', function() { //I am still not sure what it actually does
 gulp.task('testCoverage', function(cb) {
   gulp.src(['./*.js'])
     //Covering files; includeUntested is needed to include all files
-    //and not only 'required' ones 
+    //and not only 'required' ones
     .pipe(istanbul({
       includeUntested: true
     }))
@@ -57,9 +56,9 @@ gulp.task('upload', function() {
 
 gulp.task('runserver', function () {
   if (process.env.SITE_TYPE && process.env.SITE_TYPE === 'frontend') {
-    run('node client/frontServer.js').exec(); 
+    run('node client/frontServer.js').exec();
   } else {
-    run('node server.js').exec(); 
+    run('node server.js').exec();
   }
 });
 
